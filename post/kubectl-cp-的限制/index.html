@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Rebegin &middot; Fulltime Link</title>
+  <title>kubectl cp 的限制 &middot; Fulltime Link</title>
   <meta name="description" content="" />
 
   
@@ -56,11 +56,34 @@
 
     <main class="content container">
     <div class="post">
-  <h1>Rebegin</h1>
-  <time datetime=2022-03-29T10:22:40&#43;0800 class="post-date">Tue, Mar 29, 2022</time>
-  <h3 id="志始于此愿达于彼">志始于此，愿达于彼</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hello World! again!&#34;</span>)
-</span></span></code></pre></div><p><img src="/20220329.jpg" alt="郑州蝶湖森林公园"></p>
+  <h1>kubectl cp 的限制</h1>
+  <time datetime=2022-03-29T12:55:56&#43;0800 class="post-date">Tue, Mar 29, 2022</time>
+  <h3 id="kubectl-cp">kubectl cp</h3>
+<ul>
+<li>本地文件复制到pod内</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl cp D:/1/example.txt  podname:/var/www/html/public/a.txt
+</span></span><span style="display:flex;"><span>kubectl cp example.txt podname:public/a.txt
+</span></span></code></pre></div><blockquote>
+<p>本地及远程地址都可使用绝对路径或者相对路径</p>
+</blockquote>
+<blockquote>
+<p>其中本地地址的相对目录为当前kubectl执行命令的目录</p>
+</blockquote>
+<blockquote>
+<p>远程地址的目录为pod workdir的目录</p>
+</blockquote>
+<ul>
+<li>pod内文件复制到本地</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl cp podname:public/a.txt b.txt
+</span></span></code></pre></div><blockquote>
+<p><strong>本地及远程地址都只能使用相对路径</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>而且本地的路径不能有层级</strong></p>
+</blockquote>
+<p><img src="/20220329.jpg" alt="郑州蝶湖森林公园"></p>
 
 </div>
 
