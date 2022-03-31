@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.96.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kratos Rpc尝试的二三事 &middot; Fulltime Link</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <a href="https://fulltimelink.github.io/"><h1>Fulltime Link</h1></a>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://fulltimelink.github.io/">Home</a> </li>
+        <li><a href="/tags/algorithm"> Algorithm </a></li><li><a href="/tags/go"> Go </a></li><li><a href="/tags/java"> Java </a></li><li><a href="/tags/javascript"> Javascript </a></li><li><a href="/tags/kubernetes"> Kubernetes </a></li><li><a href="/tags/linux"> Linux </a></li><li><a href="/tags/php"> Php </a></li>
+      </ul>
+    </nav>
+
+    </div>
+    <div class="sidebar-about sidebar-sticky">
+      <p class="lead">
+        
+        <p class="xlp">最难过的事情不是遇不见。而是遇见了，得到了，却又匆忙失去。求而不得，舍而不能，得而不惜，然后心上便因此纠结成了一道疤。它让你什么时候疼，就什么时候疼！</p>
+        
+      </p>
+      <p>&copy; 2022. All rights reserved. </p>
+    </div>
+  </div>
+  <style type="text/css">
+    .xlp{text-indent: 2em !important;font-size:0.9rem;text-decoration:underline;}
+  </style>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Kratos Rpc尝试的二三事</h1>
+  <time datetime=2022-03-31T08:14:27&#43;0800 class="post-date">Thu, Mar 31, 2022</time>
+  <ul>
+<li>起</li>
+</ul>
+<p>经过这一段时间对kratos框架的了解，也算大致熟悉了整体的使用流程，以及DDD的一些思想。
+恰巧我台有个c端转码的业务，为了不让机房里的那些T4闲置落灰，遂决定用kratos把玩一番。</p>
+<ul>
+<li>析</li>
+</ul>
+<p>既然是使用GPU转码，就先确认GPU转码的可行性。由于我台目前整体已经推成了容器化的部署，
+所以测试Dockerfile的内容大概就是如下三步：</p>
+<ol>
+<li>加载GPU官方基础镜像-(动辄几个G，确实大&hellip;)</li>
+<li>添加ffmpeg源码进行编译安装-(源安装的ffmpeg不能使用GPU)</li>
+<li>添加自己转码服务程序</li>
+</ol>
+<ul>
+<li>坑1</li>
+</ul>
+<p>等了半天，镜像终于制作好，本机没有好的显卡，也为了和生产环境保持一致，推到服务器进行
+测试，打tag， 推harbor, rancher部署（指定调度到带GPU的node）。exec进去看看驱动
+是否一切正常：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@transcode-6b9c5cb9f6-98hht app<span style="color:#f92672">]</span><span style="color:#75715e"># nvidia-smi</span>
+</span></span><span style="display:flex;"><span>Thu Mar <span style="color:#ae81ff">31</span> 08:38:28 <span style="color:#ae81ff">2022</span>       
+</span></span><span style="display:flex;"><span>+-----------------------------------------------------------------------------+
+</span></span><span style="display:flex;"><span>| NVIDIA-SMI 440.56       Driver Version: 440.56       CUDA Version: 10.2     |
+</span></span><span style="display:flex;"><span>|-------------------------------+----------------------+----------------------+
+</span></span><span style="display:flex;"><span>| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+</span></span><span style="display:flex;"><span>| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+</span></span><span style="display:flex;"><span>|<span style="color:#f92672">===============================</span>+<span style="color:#f92672">======================</span>+<span style="color:#f92672">======================</span>|
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">0</span>  GRID T4-8Q          On   | 00000000:00:0A.0 Off |                  N/A |
+</span></span><span style="display:flex;"><span>| N/A   N/A    P8    N/A /  N/A |   1104MiB /  8192MiB |      0%      Default |
+</span></span><span style="display:flex;"><span>+-------------------------------+----------------------+----------------------+
+</span></span><span style="display:flex;"><span>                                                                               
+</span></span><span style="display:flex;"><span>+-----------------------------------------------------------------------------+
+</span></span><span style="display:flex;"><span>| Processes:                                                       GPU Memory |
+</span></span><span style="display:flex;"><span>|  GPU       PID   Type   Process name                             Usage      |
+</span></span><span style="display:flex;"><span>|<span style="color:#f92672">=============================================================================</span>|
+</span></span><span style="display:flex;"><span>|  No running processes found                                                 |
+</span></span><span style="display:flex;"><span>+-----------------------------------------------------------------------------+
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@transcode-6b9c5cb9f6-98hht app<span style="color:#f92672">]</span><span style="color:#75715e"># ffmpeg -codecs | grep cuvid</span>
+</span></span><span style="display:flex;"><span>ffmpeg version N-102049-gcc7943e803 Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000-2021 the FFmpeg developers
+</span></span><span style="display:flex;"><span>  built with gcc 4.8.5 <span style="color:#f92672">(</span>GCC<span style="color:#f92672">)</span> <span style="color:#ae81ff">20150623</span> <span style="color:#f92672">(</span>Red Hat 4.8.5-44<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  configuration: --prefix<span style="color:#f92672">=</span>/root/ffmpeg_build --pkg-config-flags<span style="color:#f92672">=</span>--static --extra-cflags<span style="color:#f92672">=</span>-I/root/ffmpeg_build/include --extra-ldflags<span style="color:#f92672">=</span>-L/root/ffmpeg_build/lib --extra-libs<span style="color:#f92672">=</span>-lpthread --extra-libs<span style="color:#f92672">=</span>-lm --bindir<span style="color:#f92672">=</span>/root/bin --enable-gpl --enable-libfdk_aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvpx --enable-libsrt --enable-libx264 --enable-nonfree --extra-ldflags<span style="color:#f92672">=</span>-L/usr/local/cuda/lib64 --extra-cflags<span style="color:#f92672">=</span>-I/usr/local/cuda/include --enable-libnpp --enable-cuda --enable-cuvid
+</span></span><span style="display:flex;"><span>  libavutil      56. 74.100 / 56. 74.100
+</span></span><span style="display:flex;"><span>  libavcodec     58.137.100 / 58.137.100
+</span></span><span style="display:flex;"><span>  libavformat    58. 79.100 / 58. 79.100
+</span></span><span style="display:flex;"><span>  libavdevice    58. 14.100 / 58. 14.100
+</span></span><span style="display:flex;"><span>  libavfilter     7.111.100 /  7.111.100
+</span></span><span style="display:flex;"><span>  libswscale      5. 10.100 /  5. 10.100
+</span></span><span style="display:flex;"><span>  libswresample   3. 10.100 /  3. 10.100
+</span></span><span style="display:flex;"><span>  libpostproc    55. 10.100 / 55. 10.100
+</span></span><span style="display:flex;"><span> DEV.LS h264                 H.264 / AVC / MPEG-4 AVC / MPEG-4 part <span style="color:#ae81ff">10</span> <span style="color:#f92672">(</span>decoders: h264 h264_cuvid <span style="color:#f92672">)</span> <span style="color:#f92672">(</span>encoders: libx264 libx264rgb h264_nvenc nvenc nvenc_h264 <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. hevc                 H.265 / HEVC <span style="color:#f92672">(</span>High Efficiency Video Coding<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>decoders: hevc hevc_cuvid <span style="color:#f92672">)</span> <span style="color:#f92672">(</span>encoders: nvenc_hevc hevc_nvenc <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEVIL. mjpeg                Motion JPEG <span style="color:#f92672">(</span>decoders: mjpeg mjpeg_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. mpeg1video           MPEG-1 video <span style="color:#f92672">(</span>decoders: mpeg1video mpeg1_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. mpeg2video           MPEG-2 video <span style="color:#f92672">(</span>decoders: mpeg2video mpegvideo mpeg2_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. mpeg4                MPEG-4 part <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>decoders: mpeg4 mpeg4_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> D.V.L. vc1                  SMPTE VC-1 <span style="color:#f92672">(</span>decoders: vc1 vc1_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. vp8                  On2 VP8 <span style="color:#f92672">(</span>decoders: vp8 libvpx vp8_cuvid <span style="color:#f92672">)</span> <span style="color:#f92672">(</span>encoders: libvpx <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. vp9                  Google VP9 <span style="color:#f92672">(</span>decoders: vp9 libvpx-vp9 vp9_cuvid <span style="color:#f92672">)</span> <span style="color:#f92672">(</span>encoders: libvpx-vp9 <span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>-_-  一切OK，c端转码主要是为了移动端观看，h264_nvenc标准转码就行</p>
+<p>kubectl cp 进去一个MOV文件转码试试</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ffmpeg -y -hwaccel cuvid  -i 1.MOV -c:v h264_nvenc output.mp4
+</span></span></code></pre></div><p><img src="/20220331/1.png" alt="GPU转码"></p>
+<p>见红，糟糕，用我糟糕的英语大概猜测了一下，没检测到显卡？什么鬼&hellip;</p>
+<p>CPU转码测试一下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ffmpeg -y  -i 1.MOV -c:v h264_nvenc output.mp4
+</span></span></code></pre></div><p>一切正常，嗯&hellip; 看来就是GPU的问题了，但是使用smi查看又是正常的，这什么鬼？
+没办法，去看看官方<strong>英文</strong>文档吧&hellip;
+<img src="/20220331/1.jpg" alt="全英文"></p>
+<p><em>-</em>, 少了环境变量，设置上&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">ENV</span> NVIDA_VISIBLE_DEVICES <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;all&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> NVIDIA_DRIVER_CAPABILITIES <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;video,compute,utility&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>(<del>加上compute是不是就能挖矿了&hellip;</del>)</p>
+<ul>
+<li>坑2</li>
+</ul>
+<p>解决了环境问题，再尝试手动转码一次看看</p>
+<p>啪~ 又见红了~</p>
+<p><img src="/20220331/2.png" alt="again"></p>
+<p>看这错误，第一帧处理就出错了&hellip;</p>
+<p>怎么会有auto_scaler? 并没有指定转码后的大小啊？莫非视频有问题？</p>
+<p>加个不旋转试试~</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ffmpeg -y -hwaccel cuvid -autorotate <span style="color:#ae81ff">0</span>  -i 1.MOV -c:v h264_nvenc output.mp4
+</span></span></code></pre></div><p>哎正常了，ffprobe查看下这个视频文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Input <span style="color:#75715e">#0, mov,mp4,m4a,3gp,3g2,mj2, from &#39;1.MOV&#39;:</span>
+</span></span><span style="display:flex;"><span>  Metadata:
+</span></span><span style="display:flex;"><span>    major_brand     : qt  
+</span></span><span style="display:flex;"><span>    minor_version   : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    compatible_brands: qt  
+</span></span><span style="display:flex;"><span>    creation_time   : 2021-11-27T10:38:30.000000Z
+</span></span><span style="display:flex;"><span>    com.apple.quicktime.make: Apple
+</span></span><span style="display:flex;"><span>    com.apple.quicktime.model: iPhone <span style="color:#ae81ff">12</span> Pro Max
+</span></span><span style="display:flex;"><span>    com.apple.quicktime.software: 14.2
+</span></span><span style="display:flex;"><span>    com.apple.quicktime.creationdate: 2021-11-27T18:38:30+0800
+</span></span><span style="display:flex;"><span>  Duration: 00:00:02.84, start: 0.000000, bitrate: <span style="color:#ae81ff">17705</span> kb/s
+</span></span><span style="display:flex;"><span>  Stream <span style="color:#75715e">#0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709), 1920x1080, 17442 kb/s, 29.98 fps, 29.97 tbr, 600 tbn, 1200 tbc (default)</span>
+</span></span><span style="display:flex;"><span>    Metadata:
+</span></span><span style="display:flex;"><span>      rotate          : <span style="color:#ae81ff">90</span>
+</span></span><span style="display:flex;"><span>      creation_time   : 2021-11-27T10:38:30.000000Z
+</span></span><span style="display:flex;"><span>      handler_name    : Core Media Video
+</span></span><span style="display:flex;"><span>      vendor_id       : <span style="color:#f92672">[</span>0<span style="color:#f92672">][</span>0<span style="color:#f92672">][</span>0<span style="color:#f92672">][</span>0<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>      encoder         : H.264
+</span></span><span style="display:flex;"><span>    Side data:
+</span></span><span style="display:flex;"><span>      displaymatrix: rotation of -90.00 degrees
+</span></span><span style="display:flex;"><span>  Stream <span style="color:#75715e">#0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 164 kb/s (default)</span>
+</span></span><span style="display:flex;"><span>    Metadata:
+</span></span><span style="display:flex;"><span>      creation_time   : 2021-11-27T10:38:30.000000Z
+</span></span><span style="display:flex;"><span>      handler_name    : Core Media Audio
+</span></span><span style="display:flex;"><span>      vendor_id       : <span style="color:#f92672">[</span>0<span style="color:#f92672">][</span>0<span style="color:#f92672">][</span>0<span style="color:#f92672">][</span>0<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  Stream <span style="color:#75715e">#0:2(und): Data: none (mebx / 0x7862656D), 0 kb/s (default)</span>
+</span></span><span style="display:flex;"><span>    Metadata:
+</span></span><span style="display:flex;"><span>      creation_time   : 2021-11-27T10:38:30.000000Z
+</span></span><span style="display:flex;"><span>      handler_name    : Core Media Metadata
+</span></span><span style="display:flex;"><span>  Stream <span style="color:#75715e">#0:3(und): Data: none (mebx / 0x7862656D), 20 kb/s (default)</span>
+</span></span><span style="display:flex;"><span>    Metadata:
+</span></span><span style="display:flex;"><span>      creation_time   : 2021-11-27T10:38:30.000000Z
+</span></span><span style="display:flex;"><span>      handler_name    : Core Media Metadata
+</span></span><span style="display:flex;"><span>  Stream <span style="color:#75715e">#0:4(und): Data: none (mebx / 0x7862656D), 49 kb/s (default)</span>
+</span></span><span style="display:flex;"><span>    Metadata:
+</span></span><span style="display:flex;"><span>      creation_time   : 2021-11-27T10:38:30.000000Z
+</span></span><span style="display:flex;"><span>      handler_name    : Core Media Metadata
+</span></span></code></pre></div><p>Metadata下确实有 rotate:90，让业务确认了下视频的拍摄机器及设置，iphone 13pro, 有钱人真是越来越多了~</p>
+<ul>
+<li>试</li>
+</ul>
+<p>好了，基础环境已经OK了，用kratos使用monorepo写两个简单的服务测试</p>
+<ol>
+<li>distribute服务-BFF层，HTTP+RPC</li>
+<li>transcode服务- RPC</li>
+</ol>
+<p>注册中心和trace在本机使用docker部署，consul和jaeger</p>
+<p>分别启动两个服务，consul面板上发现只有一个服务注册，启动一个就会顶掉另外一个，
+不用说肯定有啥重复了，看下两个的服务名</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">dx</span><span style="color:#f92672">-</span><span style="color:#a6e22e">transcode</span>.<span style="color:#a6e22e">ditribute</span>.<span style="color:#a6e22e">service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">dx</span><span style="color:#f92672">-</span><span style="color:#a6e22e">transcode</span>.<span style="color:#a6e22e">transcode</span>.<span style="color:#a6e22e">service</span>
+</span></span></code></pre></div><p>服务名并不重复，看下注册部分的代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Hostname</span>()
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">newApp</span>(<span style="color:#a6e22e">logger</span> <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Logger</span>, <span style="color:#a6e22e">hs</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>, <span style="color:#a6e22e">gs</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Server</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">kratos</span>.<span style="color:#a6e22e">App</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">kratos</span>.<span style="color:#a6e22e">New</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">kratos</span>.<span style="color:#a6e22e">ID</span>(<span style="color:#a6e22e">id</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">kratos</span>.<span style="color:#a6e22e">Name</span>(<span style="color:#a6e22e">Name</span>),
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>额，还有个id，使用的本机HostName,那肯定重复啊，直接去掉</p>
+<p>再看注册的ID</p>
+<pre tabindex="0"><code>f8d0be93-b086-11ec-b07d-186024a977aa
+f8d0be93-b086-11ec-b07d-186024a977aa
+</code></pre><p>嗯，自动生成的已经是随机的了，细节回头再追，先确认下BFF到backend之间是否走的rpc</p>
+<p>wireshark走起，附加上protobuf文件，解码为http2</p>
+<p><img src="/20220331/2.jpg" alt="wireshark"></p>
+<hr>
+<p><img src="/20220331.jpg" alt="wireshark"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>
