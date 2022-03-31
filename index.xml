@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Fulltime Link</title>
-    <link>https://fulltimelink.github.io/</link>
+    <link>fulltimelink.github.io/</link>
     <description>Recent content on Fulltime Link</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 31 Mar 2022 08:14:27 +0800</lastBuildDate><atom:link href="https://fulltimelink.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Mar 2022 08:14:27 +0800</lastBuildDate><atom:link href="fulltimelink.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kratos Rpc尝试的二三事</title>
-      <link>https://fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
+      <link>fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
       <pubDate>Thu, 31 Mar 2022 08:14:27 +0800</pubDate>
       
-      <guid>https://fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
+      <guid>fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
       <description>起  经过这一段时间对kratos框架的了解，也算大致熟悉了整体的使用流程，以及DDD的一些思想。 恰巧我台有个c端转码的业务，为了不让机房里的那些T4闲置落灰，遂决定用kratos把玩一番。
  析  既然是使用GPU转码，就先确认GPU转码的可行性。由于我台目前整体已经推成了容器化的部署， 所以测试Dockerfile的内容大概就是如下三步：
  加载GPU官方基础镜像-(动辄几个G，确实大&amp;hellip;) 添加ffmpeg源码进行编译安装-(源安装的ffmpeg不能使用GPU) 添加自己转码服务程序   坑1  等了半天，镜像终于制作好，本机没有好的显卡，也为了和生产环境保持一致，推到服务器进行 测试，打tag， 推harbor, rancher部署（指定调度到带GPU的node）。exec进去看看驱动 是否一切正常：
@@ -21,10 +21,10 @@
     
     <item>
       <title>kubectl cp 的限制</title>
-      <link>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</link>
+      <link>fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</link>
       <pubDate>Tue, 29 Mar 2022 12:55:56 +0800</pubDate>
       
-      <guid>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</guid>
+      <guid>fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</guid>
       <description>kubectl cp  本地文件复制到pod内  kubectl cp D:/1/example.txt podname:/var/www/html/public/a.txt kubectl cp example.txt podname:public/a.txt  本地及远程地址都可使用绝对路径或者相对路径
   其中本地地址的相对目录为当前kubectl执行命令的目录
   远程地址的目录为pod workdir的目录
@@ -35,10 +35,10 @@
     
     <item>
       <title>Rebegin</title>
-      <link>https://fulltimelink.github.io/post/rebegin/</link>
+      <link>fulltimelink.github.io/post/rebegin/</link>
       <pubDate>Tue, 29 Mar 2022 10:22:40 +0800</pubDate>
       
-      <guid>https://fulltimelink.github.io/post/rebegin/</guid>
+      <guid>fulltimelink.github.io/post/rebegin/</guid>
       <description>志始于此，愿达于彼 fmt.Println(&amp;#34;Hello World! again!&amp;#34;) </description>
     </item>
     
