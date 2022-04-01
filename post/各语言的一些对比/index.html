@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.96.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>各语言的一些对比 &middot; Fulltime Link</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <a href="https://fulltimelink.github.io/"><h1>Fulltime Link</h1></a>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://fulltimelink.github.io/">Home</a> </li>
+        <li><a href="/tags/algorithm"> Algorithm </a></li><li><a href="/tags/go"> Go </a></li><li><a href="/tags/java"> Java </a></li><li><a href="/tags/javascript"> Javascript </a></li><li><a href="/tags/kubernetes"> Kubernetes </a></li><li><a href="/tags/linux"> Linux </a></li><li><a href="/tags/php"> Php </a></li>
+      </ul>
+    </nav>
+
+    </div>
+    <div class="sidebar-about sidebar-sticky">
+      <p class="lead">
+        
+        <p class="xlp">最难过的事情不是遇不见。而是遇见了，得到了，却又匆忙失去。求而不得，舍而不能，得而不惜，然后心上便因此纠结成了一道疤。它让你什么时候疼，就什么时候疼！</p>
+        
+      </p>
+      <p>&copy; 2022. All rights reserved. </p>
+    </div>
+  </div>
+  <style type="text/css">
+    .xlp{text-indent: 2em !important;font-size:0.9rem;text-decoration:underline;}
+  </style>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>各语言的一些对比</h1>
+  <time datetime=2022-04-01T16:11:47&#43;0800 class="post-date">Fri, Apr 1, 2022</time>
+  <p>最近对接的事比较多，java <del>摸鱼</del> <strong>学习</strong> 一直没有进度</p>
+<p>担心前一段学习白费，把收集到的各语言的一些对比整理了一下</p>
+<p>顺便熟悉一下markdown的table语法 -_-</p>
+<table>
+<thead>
+<tr>
+<th>项/语言</th>
+<th>GO</th>
+<th>PHP</th>
+<th>Java</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基本类型</td>
+<td>整数类型：uint8/16/32/64  , int8/16/32/64  , int<!-- raw HTML omitted -->浮点数类型：float32，float64<!-- raw HTML omitted -->复数类型：complex64, complex128<!-- raw HTML omitted -->字符类型：byte, rune<!-- raw HTML omitted -->字符串类型： string<!-- raw HTML omitted -->布尔类型：bool<!-- raw HTML omitted -->指针类型：uintptr</td>
+<td>标量类型：bool, string, integer, float <!-- raw HTML omitted -->符合数据类型：array, object<!-- raw HTML omitted -->特殊类型： resource, null</td>
+<td>整数类型：byte，short，int，long<!-- raw HTML omitted -->浮点数类型：float，double<!-- raw HTML omitted -->字符类型：char<!-- raw HTML omitted -->布尔类型：boolean<!-- raw HTML omitted -->字符串类型: String  (注意是大写S ， 为引用类型)<!-- raw HTML omitted --></td>
+</tr>
+<tr>
+<td>强制类型转换</td>
+<td>int64(v)</td>
+<td>(int)$v <!-- raw HTML omitted --> intval($v) <!-- raw HTML omitted --> settype($v, &quot;int&quot;)</td>
+<td>(int)v</td>
+</tr>
+<tr>
+<td>多行字符串</td>
+<td>ss := `<!-- raw HTML omitted -->&hellip;.<!-- raw HTML omitted -->` <!-- raw HTML omitted --> 结束反引号不需要顶格</td>
+<td>$ss= &laquo;&lt;EOT<!-- raw HTML omitted -->&hellip;<!-- raw HTML omitted -->EOT;<!-- raw HTML omitted -->结束标记(EOT)需要顶格</td>
+<td>var ss = &quot;&quot;&quot;<!-- raw HTML omitted -->&hellip;<!-- raw HTML omitted -->&quot;&quot;&quot;;<!-- raw HTML omitted -->结束三个双引号不需要顶格</td>
+</tr>
+<tr>
+<td>输入输出</td>
+<td>fmt</td>
+<td>echo</td>
+<td>Scanner sc = new Scanner(System.in);<!-- raw HTML omitted -->int age = sc.nextInt();<!-- raw HTML omitted -->String name = sc.nextLine();<!-- raw HTML omitted -->System.out.println(name);<!-- raw HTML omitted --></td>
+</tr>
+<tr>
+<td>switch</td>
+<td>不需要break</td>
+<td>需要break</td>
+<td>需要break<!-- raw HTML omitted -->单箭头简洁语法时不需要<!-- raw HTML omitted -->case &quot;page&quot; -&gt; {&hellip;};</td>
+</tr>
+<tr>
+<td>yield</td>
+<td>goroutine(协程)</td>
+<td>生成迭代器 优化内存 （伪异步）</td>
+<td>switch case内 层次返回</td>
+</tr>
+</tbody>
+</table>
+<p>我去，这也太丑了，hugo的换行也不生效&hellip;</p>
+<p>老老实实写table吧 <em>-</em></p>
+<hr>
+
+
+<table>
+    <tr>
+        <td colspan="2">项、语言</td>
+        <td>Go</td>
+        <td>PHP</td>
+        <td>Java</td>
+    </tr>
+    <tr>    
+        <td colspan="2">基本类型</td>
+        <td>
+            整数类型：uint8/16/32/64  , int8/16/32/64  , int <br>
+            浮点数类型：float32，float64<br>
+            复数类型：complex64, complex128<br>
+            字符类型：byte, rune<br>
+            字符串类型： string<br>
+            布尔类型：bool<br>
+            指针类型：uintptr
+        </td>
+        <td>
+            标量类型：bool, string, integer, float<br>
+            符合数据类型：array, object<br>
+            特殊类型： resource, null
+        </td>
+        <td>
+            整数类型：byte，short，int，long<br>
+            浮点数类型：float，double<br>
+            字符类型：char<br>
+            布尔类型：boolean<br>
+            字符串类型: String  (注意是大写S ， 为引用类型)<br>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">强制类型转换</td>
+        <td>int64(v)</td>
+        <td>(int)$v<br>intval($v)<br>settype($v,"int")</td>
+        <td>(int)v</td>
+    </tr>
+    <tr>
+        <td colspan="2">多行字符串</td>
+        <td>ss := `<br>....<br>`<br>结束反引号不需要顶格</td>
+        <td>$ss = <<< EOT <br>...<br>EOT;<br>结束标记(EOT)需要顶格</td>
+        <td>var ss = """<br>...<br>""";<br>结束三个双引号不需要顶格</td>
+    </tr>
+    <tr>
+        <td colspan="2">输入输出</td>
+        <td>fmt</td>
+        <td>echo</td>
+        <td>Scanner sc = new Scanner(System.in);<br>int age = sc.nextInt();<br>String name = sc.nextLine();<br>System.out.println(name);</td>
+    </tr>
+    <tr>
+        <td colspan="2">switch</td>
+        <td>不需要break</td>
+        <td>需要break</td>
+        <td>需要break<br>单箭头简洁语法时不需要<br>case "page" -> {...};<br></td>
+    </tr>
+    <tr>
+        <td colspan="2">yield</td>
+        <td>goroutine （协程）</td>
+        <td>生成迭代器 优化内存 （伪异步）</td>
+        <td>switch case内 层次返回</td>
+    </tr>
+    <tr>
+        <td rowspan="7">面向对象</td>
+        <td>构造方法</td>
+        <td rowspan="5">struct</td>
+        <td>__construct()</td>
+        <td>
+            1. 无返回值 <br>
+            2. 与class同名
+        </td>
+    </tr>
+    <tr>
+        <td>访问父类方法</td>
+        <td>parent</td>
+        <td>super</td>
+    </tr>
+    <tr>
+        <td>类声明</td>
+        <td>php的class关键字不能有除abstract、final之外的修饰符</td>
+        <td>Java的class关键字可以有public、proctected、private修饰符，Java的一个文件只能有一个public类</td>
+    </tr>
+    <tr>
+        <td>默认修饰符</td>
+        <td>public</td>
+        <td>private</td>
+    </tr>
+    <tr>
+        <td>实例成员和实例方法的访问方法</td>
+        <td>必须是$this-></td>
+        <td>this.  也可以省略</td>
+    </tr>
+    <tr>
+        <td>定义类常量</td>
+        <td>const</td>
+        <td>const</td>
+        <td>final</td>
+    </tr>
+    <tr>
+        <td>命名空间</td>
+        <td>package</td>
+        <td>namespace</td>
+        <td>package</td>
+    </tr>
+
+</table>
+
+<hr>
+<blockquote>
+<p>markdown还是弱， 单元格合并还依赖html&hellip;</p>
+</blockquote>
+<hr>
+<p><img src="/20220401.jpg" alt="wireshark"></p>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "fulltimelink" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+    
+  </body>
+</html>
