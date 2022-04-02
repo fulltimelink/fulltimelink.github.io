@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.96.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>关于libvpx编码 &middot; Fulltime Link</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <a href="https://fulltimelink.github.io/"><h1>Fulltime Link</h1></a>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://fulltimelink.github.io/">Home</a> </li>
+        <li><a href="/tags/algorithm"> Algorithm </a></li><li><a href="/tags/go"> Go </a></li><li><a href="/tags/java"> Java </a></li><li><a href="/tags/javascript"> Javascript </a></li><li><a href="/tags/kubernetes"> Kubernetes </a></li><li><a href="/tags/linux"> Linux </a></li><li><a href="/tags/php"> Php </a></li>
+      </ul>
+    </nav>
+
+    </div>
+    <div class="sidebar-about sidebar-sticky">
+      <p class="lead">
+        
+        <p class="xlp">最难过的事情不是遇不见。而是遇见了，得到了，却又匆忙失去。求而不得，舍而不能，得而不惜，然后心上便因此纠结成了一道疤。它让你什么时候疼，就什么时候疼！</p>
+        
+      </p>
+      <p>&copy; 2022. All rights reserved. </p>
+    </div>
+  </div>
+  <style type="text/css">
+    .xlp{text-indent: 2em !important;font-size:0.9rem;text-decoration:underline;}
+  </style>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>关于libvpx编码</h1>
+  <time datetime=2022-04-02T18:24:39&#43;0800 class="post-date">Sat, Apr 2, 2022</time>
+  <p>过节了，加班写个踩的坑吧~</p>
+<ul>
+<li>
+<p>场景：</p>
+<ul>
+<li>使用GPU将视频转码为webm</li>
+<li>编码 libvpx-vp9</li>
+</ul>
+</li>
+<li>
+<p>表现:</p>
+<ul>
+<li>不使用GPU一切正常</li>
+<li>开启autorotate 报错</li>
+<li>关闭autorotate 不报错 但是转码超级慢(<del>感觉GPU没毛用</del>)</li>
+</ul>
+</li>
+</ul>
+<p>肯定先看后者,转码慢不解决,说啥都没用~</p>
+<p>上ffmpeg codecs</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> DEV.LS h264                 H.264 / AVC / MPEG-4 AVC / MPEG-4 part <span style="color:#ae81ff">10</span> <span style="color:#f92672">(</span>decoders: h264 h264_cuvid <span style="color:#f92672">)</span> <span style="color:#f92672">(</span>encoders: libx264 libx264rgb h264_nvenc nvenc nvenc_h264 <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. hevc                 H.265 / HEVC <span style="color:#f92672">(</span>High Efficiency Video Coding<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>decoders: hevc hevc_cuvid <span style="color:#f92672">)</span> <span style="color:#f92672">(</span>encoders: nvenc_hevc hevc_nvenc <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEVIL. mjpeg                Motion JPEG <span style="color:#f92672">(</span>decoders: mjpeg mjpeg_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. mpeg1video           MPEG-1 video <span style="color:#f92672">(</span>decoders: mpeg1video mpeg1_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. mpeg2video           MPEG-2 video <span style="color:#f92672">(</span>decoders: mpeg2video mpegvideo mpeg2_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. mpeg4                MPEG-4 part <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>decoders: mpeg4 mpeg4_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> D.V.L. vc1                  SMPTE VC-1 <span style="color:#f92672">(</span>decoders: vc1 vc1_cuvid <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. vp8                  On2 VP8 <span style="color:#f92672">(</span>decoders: vp8 libvpx vp8_cuvid <span style="color:#f92672">)</span> <span style="color:#f92672">(</span>encoders: libvpx <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> DEV.L. vp9                  Google VP9 <span style="color:#f92672">(</span>decoders: vp9 libvpx-vp9 vp9_cuvid <span style="color:#f92672">)</span> <span style="color:#f92672">(</span>encoders: libvpx-vp9 <span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>vp9编码解码器都OK</p>
+<p>仔细看了下和h264的区别，咦，encoder好像没有nvenc, cuvid和nvenc才是GPU的标识~</p>
+<p>莫非vp9不支持显卡&hellip;</p>
+<p><img src="/20220402/1.png" alt="vp9真不支持"></p>
+<p>NVIDIA 全系 红叉 <em>-</em>  <del>这还转个球的码</del> 换h264 mp4吧。。。</p>
+<p>上了h264_nvenc的encoder后，autorotate也正常了~</p>
+<p>顺手记几个ffmpeg的操作吧</p>
+<blockquote>
+<p>ffmpeg 查看视频帧数 -用来计算转码进度</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>INPUT_FILE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;input.mp4&#34;</span>
+</span></span><span style="display:flex;"><span>ffprobe <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -v error <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -select_streams v:0 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -count_packets <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -show_entries stream<span style="color:#f92672">=</span>nb_read_packets <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -of csv<span style="color:#f92672">=</span>p<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  $INPUT_FILE
+</span></span></code></pre></div><p>output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#ae81ff">7233</span>
+</span></span></code></pre></div><p>有了总帧数，就需要获取当前转到多少帧了</p>
+<p>可惜没有现成的参数去拿，但是可以通过-progress file的方式，将进度<strong>append</strong>到文件里</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ffmpeg -y -v error -progress %s -autorotate <span style="color:#ae81ff">1</span> -i  ...
+</span></span></code></pre></div><p>文件内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>frame<span style="color:#f92672">=</span><span style="color:#ae81ff">73</span>
+</span></span><span style="display:flex;"><span>fps<span style="color:#f92672">=</span>0.00
+</span></span><span style="display:flex;"><span>stream_0_0_q<span style="color:#f92672">=</span>29.0
+</span></span><span style="display:flex;"><span>bitrate<span style="color:#f92672">=</span>   0.1kbits/s
+</span></span><span style="display:flex;"><span>total_size<span style="color:#f92672">=</span><span style="color:#ae81ff">48</span>
+</span></span><span style="display:flex;"><span>out_time_us<span style="color:#f92672">=</span><span style="color:#ae81ff">3506213</span>
+</span></span><span style="display:flex;"><span>out_time_ms<span style="color:#f92672">=</span><span style="color:#ae81ff">3506213</span>
+</span></span><span style="display:flex;"><span>out_time<span style="color:#f92672">=</span>00:00:03.506213
+</span></span><span style="display:flex;"><span>dup_frames<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>drop_frames<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>speed<span style="color:#f92672">=</span>6.97x
+</span></span><span style="display:flex;"><span>progress<span style="color:#f92672">=</span><span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>frame<span style="color:#f92672">=</span><span style="color:#ae81ff">123</span>
+</span></span><span style="display:flex;"><span>fps<span style="color:#f92672">=</span>119.47
+</span></span><span style="display:flex;"><span>stream_0_0_q<span style="color:#f92672">=</span>29.0
+</span></span><span style="display:flex;"><span>bitrate<span style="color:#f92672">=</span> 412.5kbits/s
+</span></span><span style="display:flex;"><span>total_size<span style="color:#f92672">=</span><span style="color:#ae81ff">262192</span>
+</span></span><span style="display:flex;"><span>out_time_us<span style="color:#f92672">=</span><span style="color:#ae81ff">5085170</span>
+</span></span><span style="display:flex;"><span>out_time_ms<span style="color:#f92672">=</span><span style="color:#ae81ff">5085170</span>
+</span></span><span style="display:flex;"><span>out_time<span style="color:#f92672">=</span>00:00:05.085170
+</span></span><span style="display:flex;"><span>dup_frames<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>drop_frames<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>speed<span style="color:#f92672">=</span>4.94x
+</span></span><span style="display:flex;"><span>progress<span style="color:#f92672">=</span><span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>frame<span style="color:#f92672">=</span><span style="color:#ae81ff">154</span>
+</span></span><span style="display:flex;"><span>fps<span style="color:#f92672">=</span>89.92
+</span></span><span style="display:flex;"><span>stream_0_0_q<span style="color:#f92672">=</span>-1.0
+</span></span><span style="display:flex;"><span>bitrate<span style="color:#f92672">=</span>2059.1kbits/s
+</span></span><span style="display:flex;"><span>total_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1326765</span>
+</span></span><span style="display:flex;"><span>out_time_us<span style="color:#f92672">=</span><span style="color:#ae81ff">5154830</span>
+</span></span><span style="display:flex;"><span>out_time_ms<span style="color:#f92672">=</span><span style="color:#ae81ff">5154830</span>
+</span></span><span style="display:flex;"><span>out_time<span style="color:#f92672">=</span>00:00:05.154830
+</span></span><span style="display:flex;"><span>dup_frames<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>drop_frames<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>speed<span style="color:#f92672">=</span>3.01x
+</span></span><span style="display:flex;"><span>progress<span style="color:#f92672">=</span>end
+</span></span></code></pre></div><p>自己想办法解析到目前的frame  然后就能计算progress百分比了</p>
+<hr>
+<p><img src="/20220402.png" alt="二宝喝奶"></p>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "fulltimelink" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+    
+  </body>
+</html>
