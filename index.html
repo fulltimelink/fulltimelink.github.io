@@ -59,6 +59,20 @@
     <div class="posts">
 <article class="post">
   <h1 class="post-title">
+    <a href="https://fulltimelink.github.io/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/">Kratos 使用nacos服务发现的一个坑</a>
+  </h1>
+  <time datetime="2022-04-11T16:51:19&#43;0800" class="post-date">Mon, Apr 11, 2022</time>
+  接上回，经过几天的搬砖，转码服务要上预发布了，因为服务器部署的注册中心是nacos
+所以把kratos的registry改为nacos
+编译-&gt; 镜像-&gt; nodeport测试
+nacos心跳探针一直报错。。提示无可用的注册服务
+对比consul的注册服务名发现nacos下注册的服务名多了scheme后缀
+追一下kratos 下 consul和nacos注册服务时的代码
+nacos确实注册时附加了scheme, 所以rpc licent call的时候，服务名也需要加上对应的.scheme~
+ 
+  
+</article><article class="post">
+  <h1 class="post-title">
     <a href="https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/">关于libvpx编码</a>
   </h1>
   <time datetime="2022-04-02T18:24:39&#43;0800" class="post-date">Sat, Apr 2, 2022</time>

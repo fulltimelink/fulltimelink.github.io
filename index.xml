@@ -6,7 +6,23 @@
     <description>Recent content on Fulltime Link</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 02 Apr 2022 18:24:39 +0800</lastBuildDate><atom:link href="https://fulltimelink.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Apr 2022 16:51:19 +0800</lastBuildDate><atom:link href="https://fulltimelink.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kratos 使用nacos服务发现的一个坑</title>
+      <link>https://fulltimelink.github.io/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</link>
+      <pubDate>Mon, 11 Apr 2022 16:51:19 +0800</pubDate>
+      
+      <guid>https://fulltimelink.github.io/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</guid>
+      <description>接上回，经过几天的搬砖，转码服务要上预发布了，因为服务器部署的注册中心是nacos
+所以把kratos的registry改为nacos
+编译-&amp;gt; 镜像-&amp;gt; nodeport测试
+nacos心跳探针一直报错。。提示无可用的注册服务
+对比consul的注册服务名发现nacos下注册的服务名多了scheme后缀
+追一下kratos 下 consul和nacos注册服务时的代码
+nacos确实注册时附加了scheme, 所以rpc licent call的时候，服务名也需要加上对应的.scheme~
+ </description>
+    </item>
+    
     <item>
       <title>关于libvpx编码</title>
       <link>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</link>
