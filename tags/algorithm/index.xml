@@ -18,7 +18,7 @@ php 有rsort krsort arsort
 go 有 sort.Reverse 而且原生类型到封装类型也有方便的转换 sort.IntSlice([]int)
 java Collections.reverseOrder 则并不适用于原生类型
 于是，再复习一下基本用不到快忘完的排序算法：
-以降序为例 选择排序  内循环内不交换，只查找目标元素，然后外循环内将目标元素与其应该在的位置进行交换 双循环  内循环 第次循环找出当前剩下元素中的最大值的索引  循环范围 1 - n   外循环 将内循环找出的最大元素与当前遍历的元素交换  循环范围 0 - (n-1)      // -- @# 选择排序 public void SelectDescSort(int[] args){  for(int i=0;i&amp;lt;args.length-1;i++){  int index =i;  for(int j=i+1;j&amp;lt;args.length;j++){  if(args[index] &amp;lt; args[j]){  index =j;  }  }  int tmp = args[i];  args[i] = args[index];  args[index] = tmp;  } } 冒泡排序  每次内循环都进行交换，内循环结束目标元素所在位置即为预期位置 双循环  内循环 将外循环控制的当前队列中的元素两两比较，将目标元素移动到尾部  循环范围 0 - (n-外循环索引-1)   外循环 控制当前比较的元素是第几个  循环范围 0 - (n-1)      // -- @# 冒泡排序 public void BubbleDescSort(int[] args){  if(2 &amp;gt; args.</description>
+以降序为例 选择排序  内循环内不交换，只查找目标元素，然后外循环内将目标元素与其应该在的位置进行交换 双循环  内循环 第次循环找出当前剩下元素中的最大值的索引  循环范围 1 - n   外循环 将内循环找出的最大元素与当前遍历的元素交换  循环范围 0 - (n-1)      // -- @# 选择排序 public void SelectDescSort(int[] args){  for(int i=0;i&amp;lt;args.length-1;i++){  int index =i;  for(int j=i+1;j&amp;lt;args.length;j++){  if(args[index] &amp;lt; args[j]){  index =j;  }  }  int tmp = args[i];  args[i] = args[index];  args[index] = tmp;  } }  5 8 5 2 9 一次交换后，并不能实现5的稳定性，所以选择排序不是稳定性排序  冒泡排序  每次内循环都进行交换，内循环结束目标元素所在位置即为预期位置 双循环  内循环 将外循环控制的当前队列中的元素两两比较，将目标元素移动到尾部  循环范围 0 - (n-外循环索引-1)   外循环 控制当前比较的元素是第几个  循环范围 0 - (n-1)      // -- @# 冒泡排序 public void BubbleDescSort(int[] args){  if(2 &amp;gt; args.</description>
     </item>
     
   </channel>
