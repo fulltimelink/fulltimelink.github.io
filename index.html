@@ -36,7 +36,7 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://fulltimelink.github.io/">Home</a> </li>
-        <li><a href="/tags/algorithm"> Algorithm </a></li><li><a href="/tags/go"> Go </a></li><li><a href="/tags/java"> Java </a></li><li><a href="/tags/javascript"> Javascript </a></li><li><a href="/tags/kubernetes"> Kubernetes </a></li><li><a href="/tags/linux"> Linux </a></li><li><a href="/tags/php"> Php </a></li>
+        <li><a href="/tags/algorithm"> Algorithm </a></li><li><a href="/tags/go"> Go </a></li><li><a href="/tags/h5"> H5 </a></li><li><a href="/tags/java"> Java </a></li><li><a href="/tags/javascript"> Javascript </a></li><li><a href="/tags/kubernetes"> Kubernetes </a></li><li><a href="/tags/linux"> Linux </a></li><li><a href="/tags/php"> Php </a></li>
       </ul>
     </nav>
 
@@ -58,6 +58,24 @@
     <main class="content container">
     <div class="posts">
 <article class="post">
+  <h1 class="post-title">
+    <a href="https://fulltimelink.github.io/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/">微信H5使用video</a>
+  </h1>
+  <time datetime="2022-04-19T10:00:28&#43;0800" class="post-date">Tue, Apr 19, 2022</time>
+  日常摸鱼工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动
+暂停再播又会恢复正常
+经过编写简单demo测试分析，环境如下 ：
+ 安卓木有问题，只有IOS下才会出现 video标签使用了poster属性设置封面图 IOS下非微信浏览器正常播放  检测了视频，标准H264 mpeg-part 10 所以应该和视频没多大关系~
+这可能又触发了微信的某个BUG, 先搜索一下吧：
+社区有人反馈，说是加上 custom-cache=&ldquo;false&rdquo; , 经测试无效 这个好像是微信小程序video组件的
+然后又分析了下video的使用方式是否有啥特殊的
+&lt;video poster=&#34;&#34;&gt;  &lt;source src=&#34;****.mp4&#34;&gt;&lt;/source&gt; &lt;/video&gt; 将source 去掉 src 移入到video标签中 IOS下测试正常&hellip;
+赶紧看下 mdn 并没有发现video 对source有啥特殊的限制
+追不出来啥了&hellip;
+结论：微信+IOS环境下+poster的情况下，H5中video标签不可使用source指定src!!!
+ 
+  
+</article><article class="post">
   <h1 class="post-title">
     <a href="https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">梳理一下排序算法</a>
   </h1>

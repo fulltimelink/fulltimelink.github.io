@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Kratos 使用nacos服务发现的一个坑 &middot; Fulltime Link</title>
+  <title>微信H5使用video &middot; Fulltime Link</title>
   <meta name="description" content="" />
 
   
@@ -56,19 +56,30 @@
 
     <main class="content container">
     <div class="post">
-  <h1>Kratos 使用nacos服务发现的一个坑</h1>
-  <time datetime=2022-04-11T16:51:19&#43;0800 class="post-date">Mon, Apr 11, 2022</time>
-  <p>接上回，经过几天的搬砖，转码服务要上预发布了，因为服务器部署的注册中心是nacos</p>
-<p>所以把kratos的registry改为nacos</p>
-<p>编译-&gt; 镜像-&gt; nodeport测试</p>
-<p>nacos心跳探针一直报错。。提示无可用的注册服务</p>
-<p>对比consul的注册服务名发现nacos下注册的服务名多了scheme后缀</p>
-<p><img src="/20220411/1.jpg" alt="坑"></p>
-<p>追一下kratos 下 consul和nacos注册服务时的代码</p>
-<p><img src="/20220411/2.jpg" alt="坑"></p>
-<p>nacos确实注册时附加了scheme, 所以rpc licent call的时候，服务名也需要加上对应的.scheme~</p>
+  <h1>微信H5使用video</h1>
+  <time datetime=2022-04-19T10:00:28&#43;0800 class="post-date">Tue, Apr 19, 2022</time>
+  <p>日常<del>摸鱼</del>工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动</p>
+<p>暂停再播又会恢复正常</p>
+<p>经过编写简单demo测试分析，环境如下 ：</p>
+<ul>
+<li>安卓木有问题，只有IOS下才会出现</li>
+<li>video标签使用了poster属性设置封面图</li>
+<li>IOS下非微信浏览器正常播放</li>
+</ul>
+<p>检测了视频，标准H264 mpeg-part 10  所以应该和视频没多大关系~</p>
+<p>这可能又触发了微信的某个BUG, 先搜索一下吧：</p>
+<p>社区有人反馈，说是加上 custom-cache=&ldquo;false&rdquo; , 经测试无效 <del>这个好像是微信小程序video组件的</del></p>
+<p>然后又分析了下video的使用方式是否有啥特殊的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">video</span> <span style="color:#a6e22e">poster</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">source</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;****.mp4&#34;</span>&gt;&lt;/<span style="color:#f92672">source</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">video</span>&gt;
+</span></span></code></pre></div><p>将source 去掉  src 移入到video标签中 IOS下测试正常&hellip;</p>
+<p>赶紧看下 mdn  并没有发现video 对source有啥特殊的限制</p>
+<p><img src="/20220419/1.jpg" alt="兼容性"></p>
+<p>追不出来啥了&hellip;</p>
+<p><strong>结论：微信+IOS环境下+poster的情况下，H5中video标签不可使用source指定src!!!</strong></p>
 <hr>
-<p><img src="/20220411.jpg" alt="图"></p>
+<p><img src="/20220419.png" alt="20220419"></p>
 
 </div>
 
