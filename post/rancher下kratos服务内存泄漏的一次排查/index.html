@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.96.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>rancher下kratose服务”内存泄漏”的一次排查 &middot; Fulltime Link</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <a href="https://fulltimelink.github.io/"><h1>Fulltime Link</h1></a>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://fulltimelink.github.io/">Home</a> </li>
+        <li><a href="/tags/algorithm"> Algorithm </a></li><li><a href="/tags/go"> Go </a></li><li><a href="/tags/h5"> H5 </a></li><li><a href="/tags/java"> Java </a></li><li><a href="/tags/javascript"> Javascript </a></li><li><a href="/tags/kubernetes"> Kubernetes </a></li><li><a href="/tags/linux"> Linux </a></li><li><a href="/tags/php"> Php </a></li>
+      </ul>
+    </nav>
+
+    </div>
+    <div class="sidebar-about sidebar-sticky">
+      <p class="lead">
+        
+        <p class="xlp">最难过的事情不是遇不见。而是遇见了，得到了，却又匆忙失去。求而不得，舍而不能，得而不惜，然后心上便因此纠结成了一道疤。它让你什么时候疼，就什么时候疼！</p>
+        
+      </p>
+      <p>&copy; 2022. All rights reserved. </p>
+    </div>
+  </div>
+  <style type="text/css">
+    .xlp{text-indent: 2em !important;font-size:0.9rem;text-decoration:underline;}
+  </style>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>rancher下kratose服务”内存泄漏”的一次排查</h1>
+  <time datetime=2022-04-29T14:32:51&#43;0800 class="post-date">Fri, Apr 29, 2022</time>
+  <p>书接上文，服务上线后，经过一段时间的运行后发现rancher监控上内存有点异常</p>
+<p>疑似”内存泄漏“ 明天就五-了，这不是找事么_-_ <del>[虽然因为疫情不能出去逛]</del></p>
+<p>上图：</p>
+<p><img src="/20220429/mem.jpg" alt="mem"></p>
+<p>中间内存有点过山车，进pod看看实际占用了多少</p>
+<p><img src="/20220429/rss.jpg" alt="rss"></p>
+<p>持久内存才20M+ 虚拟内存才 700M+ 这和监控的内存（<del>都TM x2 不止了</del>）对不上啊，好吧，上神器 pprof</p>
+<p><img src="/20220429/pprof.jpg" alt="pprof"></p>
+<p>goroutine稳如泰山~</p>
+<p>但是allocs有点高，且有一直在增长的趋势</p>
+<p>web看一下</p>
+<p><img src="/20220429/web.jpg" alt="web"></p>
+<p>这俩货咋能占这多内存呢，看看这俩函数是哪来的~</p>
+<p><img src="/20220429/nacos.jpg" alt="list"></p>
+<p>注册中心 nacos client的sdk，莫非有泄漏 ？？？ , <del>我K</del> 那其他服务岂不是也中招了&hellip;</p>
+<p>赶紧看了一下另外一个同样使用nacos client的服务(<strong>alpine系统镜像</strong>)</p>
+<p><img src="/20220429/alpine.png" alt="alpine"></p>
+<p>???????   再来看下有问题的服务(<strong>centos镜像</strong>)</p>
+<p><img src="/20220429/centos.png" alt="centos"></p>
+<p>这对不上啊，从pprof上看，nacos client的这俩函数 都是占用了差不多的alloc_space &hellip; <del>懵逼</del></p>
+<p>上gc trace，触发几次业务，看看到底是不是GC不过来</p>
+<p><img src="/20220429/gc.jpg" alt="gc"></p>
+<p>稳如泰山 -_-，这就想不明白了</p>
+<p><del>梯子Google</del>百度一顿搜索，无果~</p>
+<p>到目前为止总结一下：</p>
+<ul>
+<li>
+<p>kubelet监控内存使用的是cAdvisor 的 container_memory_working_set_bytes 指标 ，它统计的是(RSS+CACHE)</p>
+<ul>
+<li>如果是统计指标的事，那上面的alpine和centos下内存统计应该一样， 现在说不通啊</li>
+</ul>
+</li>
+<li>
+<p>还有另外一个不同，那就是两个服务的系统不一样，alpine属于精简系统， centos大家就比较熟悉了</p>
+<ul>
+<li>本来想着把centos那个服务换成alpine， 但是nvidia的GPU基础镜像是没有alpine的，但是有ubuntu的</li>
+</ul>
+</li>
+<li>
+<p>TODO 为了验证是否是系统的差异引起的统计问题，下一步只能把centos换成ubuntu试一试了，但是我比较懒，明天都五一了，嘿嘿，五一后再说吧~ <del>可能就忘了-_-</del></p>
+</li>
+</ul>
+<hr>
+<p>参考链接：<del>万恶的markdown不能new window</del></p>
+<p><a href="https://eddycjy.gitbook.io/golang/di-1-ke-za-tan/why-vsz-large">1.13 Go 应用内存占用太多，让排查？（VSZ篇）</a></p>
+<p><a href="https://www.bilibili.com/read/cv6361398">为什么容器内存占用居高不下，频频 OOM</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/136172503">深入理解kubernetes容器指标</a></p>
+<p><a href="https://ormissia.github.io/posts/problems/5001-go-online-service-oom/">记一次线上的内存持续增长问题</a></p>
+<hr>
+<p><img src="/20220429.png" alt="20220429"></p>
+<p><img src="/20220429.jpg" alt="20220429"></p>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "fulltimelink" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+    
+  </body>
+</html>
