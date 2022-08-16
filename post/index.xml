@@ -1,152 +1,115 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on Fulltime Link</title>
-    <link>https://fulltimelink.github.io/post/</link>
-    <description>Recent content in Posts on Fulltime Link</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <lastBuildDate>Fri, 29 Apr 2022 14:32:51 +0800</lastBuildDate><atom:link href="https://fulltimelink.github.io/post/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>rancher下kratos服务”内存泄漏”的一次排查</title>
-      <link>https://fulltimelink.github.io/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</link>
-      <pubDate>Fri, 29 Apr 2022 14:32:51 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</guid>
-      <description>书接上文，服务上线后，经过一段时间的运行后发现rancher监控上内存有点异常
+	<channel>
+		<title>Posts on 旧事重提</title>
+		<link>https://fulltimelink.github.io/post/</link>
+		<description>Recent content in Posts on fulltimelink.github.io</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>zh-CN</language>
+		<lastBuildDate>Fri, 29 Apr 2022 14:32:51 +0800</lastBuildDate>
+		<atom:link href="https://fulltimelink.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+		<item>
+			<title>rancher下kratos服务”内存泄漏”的一次排查</title>
+			<link>https://fulltimelink.github.io/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</link>
+			<pubDate>Fri, 29 Apr 2022 14:32:51 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</guid>
+			<description>
+			书接上文，服务上线后，经过一段时间的运行后发现rancher监控上内存有点异常
 疑似”内存泄漏“ 明天就五-了，这不是找事么_-_ [虽然因为疫情不能出去逛]
 上图：
 中间内存有点过山车，进pod看看实际占用了多少
-持久内存才20M+ 虚拟内存才 700M+ 这和监控的内存（都TM x2 不止了）对不上啊，好吧，上神器 pprof
-goroutine稳如泰山~
-但是allocs有点高，且有一直在增长的趋势
-web看一下
-这俩货咋能占这多内存呢，看看这俩函数是哪来的~
-注册中心 nacos client的sdk，莫非有泄漏 ？？？ , 我K 那其他服务岂不是也中招了&amp;hellip;
-赶紧看了一下另外一个同样使用nacos client的服务(alpine系统镜像)
-??????? 再来看下有问题的服务(centos镜像)
-这对不上啊，从pprof上看，nacos client的这俩函数 都是占用了差不多的alloc_space &amp;hellip; 懵逼
-上gc trace，触发几次业务，看看到底是不是GC不过来
-稳如泰山 -_-，这就想不明白了
-梯子Google百度一顿搜索，无果~
-到目前为止总结一下：
-  kubelet监控内存使用的是cAdvisor 的 container_memory_working_set_bytes 指标 ，它统计的是(RSS+CACHE)
- 如果是统计指标的事，那上面的alpine和centos下内存统计应该一样， 现在说不通啊    还有另外一个不同，那就是两个服务的系统不一样，alpine属于精简系统， centos大家就比较熟悉了
- 本来想着把centos那个服务换成alpine， 但是nvidia的GPU基础镜像是没有alpine的，但是有ubuntu的    TODO 为了验证是否是系统的差异引起的统计问题，下一步只能把centos换成ubuntu试一试了，但是我比较懒，明天都五一了，嘿嘿，五一后再说吧~ 可能就忘了-_-
-   参考链接：万恶的markdown不能new window
-1.13 Go 应用内存占用太多，让排查？（VSZ篇）</description>
-    </item>
-    
-    <item>
-      <title>微信H5使用video</title>
-      <link>https://fulltimelink.github.io/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/</link>
-      <pubDate>Tue, 19 Apr 2022 10:00:28 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/</guid>
-      <description>日常摸鱼工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动
+持久内存才20M+ 虚拟内存才 700M+ 这和监控的内存（ …
+			</description>
+		</item>
+		<item>
+			<title>微信H5使用video</title>
+			<link>https://fulltimelink.github.io/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/</link>
+			<pubDate>Tue, 19 Apr 2022 10:00:28 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/</guid>
+			<description>
+			日常摸鱼工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动
 暂停再播又会恢复正常
 经过编写简单demo测试分析，环境如下 ：
- 安卓木有问题，只有IOS下才会出现 video标签使用了poster属性设置封面图 IOS下非微信浏览器正常播放  检测了视频，标准H264 mpeg-part 10 所以应该和视频没多大关系~
-这可能又触发了微信的某个BUG, 先搜索一下吧：
-社区有人反馈，说是加上 custom-cache=&amp;ldquo;false&amp;rdquo; , 经测试无效 这个好像是微信小程序video组件的
-然后又分析了下video的使用方式是否有啥特殊的
-&amp;lt;video poster=&amp;#34;&amp;#34;&amp;gt;  &amp;lt;source src=&amp;#34;****.mp4&amp;#34;&amp;gt;&amp;lt;/source&amp;gt; &amp;lt;/video&amp;gt; 将source 去掉 src 移入到video标签中 IOS下测试正常&amp;hellip;
-赶紧看下 mdn 并没有发现video 对source有啥特殊的限制
-追不出来啥了&amp;hellip;
-结论：微信+IOS环境下+poster的情况下，H5中video标签不可使用source指定src!!!
- </description>
-    </item>
-    
-    <item>
-      <title>梳理一下排序算法</title>
-      <link>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
-      <pubDate>Wed, 13 Apr 2022 08:54:18 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
-      <description>最近看java的教程，对比了一下，发现java对原生类型的逆向排序支持较弱不够友好
+安卓木有问题，只有IOS下才会出现 video标签使用了poster属性设置封面图 IOS下非微信浏览器正常播放 检测了视频，标准H264 …
+			</description>
+		</item>
+		<item>
+			<title>梳理一下排序算法</title>
+			<link>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+			<pubDate>Wed, 13 Apr 2022 08:54:18 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
+			<description>
+			最近看java的教程，对比了一下，发现java对原生类型的逆向排序支持较弱不够友好
 php 有rsort krsort arsort
 go 有 sort.Reverse 而且原生类型到封装类型也有方便的转换 sort.IntSlice([]int)
-java Collections.reverseOrder 则并不适用于原生类型
-于是，再复习一下基本用不到快忘完的排序算法：
-以降序为例 选择排序  内循环内不交换，只查找目标元素，然后外循环内将目标元素与其应该在的位置进行交换 双循环  内循环 第次循环找出当前剩下元素中的最大值的索引  循环范围 1 - n   外循环 将内循环找出的最大元素与当前遍历的元素交换  循环范围 0 - (n-1)      // -- @# 选择排序 public void SelectDescSort(int[] args){  for(int i=0;i&amp;lt;args.length-1;i++){  int index =i;  for(int j=i+1;j&amp;lt;args.length;j++){  if(args[index] &amp;lt; args[j]){  index =j;  }  }  int tmp = args[i];  args[i] = args[index];  args[index] = tmp;  } }  5 8 5 2 9 一次交换后，并不能实现5的稳定性，所以选择排序不是稳定性排序  冒泡排序  每次内循环都进行交换，内循环结束目标元素所在位置即为预期位置 双循环  内循环 将外循环控制的当前队列中的元素两两比较，将目标元素移动到尾部  循环范围 0 - (n-外循环索引-1)   外循环 控制当前比较的元素是第几个  循环范围 0 - (n-1)      // -- @# 冒泡排序 public void BubbleDescSort(int[] args){  if(2 &amp;gt; args.</description>
-    </item>
-    
-    <item>
-      <title>Kratos 使用nacos服务发现的一个坑</title>
-      <link>https://fulltimelink.github.io/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</link>
-      <pubDate>Mon, 11 Apr 2022 16:51:19 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</guid>
-      <description>接上回，经过几天的搬砖，转码服务要上预发布了，因为服务器部署的注册中心是nacos
+java …
+			</description>
+		</item>
+		<item>
+			<title>Kratos 使用nacos服务发现的一个坑</title>
+			<link>https://fulltimelink.github.io/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</link>
+			<pubDate>Mon, 11 Apr 2022 16:51:19 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</guid>
+			<description>
+			接上回，经过几天的搬砖，转码服务要上预发布了，因为服务器部署的注册中心是nacos
 所以把kratos的registry改为nacos
-编译-&amp;gt; 镜像-&amp;gt; nodeport测试
+编译-> 镜像-> nodeport测试
 nacos心跳探针一直报错。。提示无可用的注册服务
-对比consul的注册服务名发现nacos下注册的服务名多了scheme后缀
-追一下kratos 下 consul和nacos注册服务时的代码
-nacos确实注册时附加了scheme, 所以rpc licent call的时候，服务名也需要加上对应的.scheme~
- </description>
-    </item>
-    
-    <item>
-      <title>关于libvpx编码</title>
-      <link>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</link>
-      <pubDate>Sat, 02 Apr 2022 18:24:39 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</guid>
-      <description>过节了，加班写个踩的坑吧~
-  场景：
- 使用GPU将视频转码为webm 编码 libvpx-vp9    表现:
- 不使用GPU一切正常 开启autorotate 报错 关闭autorotate 不报错 但是转码超级慢(感觉GPU没毛用)    肯定先看后者,转码慢不解决,说啥都没用~
-上ffmpeg codecs
- DEV.LS h264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (decoders: h264 h264_cuvid ) (encoders: libx264 libx264rgb h264_nvenc nvenc nvenc_h264 )  DEV.L. hevc H.265 / HEVC (High Efficiency Video Coding) (decoders: hevc hevc_cuvid ) (encoders: nvenc_hevc hevc_nvenc )  DEVIL. mjpeg Motion JPEG (decoders: mjpeg mjpeg_cuvid )  DEV.</description>
-    </item>
-    
-    <item>
-      <title>各语言的一些对比</title>
-      <link>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</link>
-      <pubDate>Fri, 01 Apr 2022 16:11:47 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</guid>
-      <description>最近对接的事比较多，java 摸鱼 学习 一直没有进度
+对比consul的注册服务名发现nacos下注册的 …
+			</description>
+		</item>
+		<item>
+			<title>关于libvpx编码</title>
+			<link>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</link>
+			<pubDate>Sat, 02 Apr 2022 18:24:39 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</guid>
+			<description>
+			过节了，加班写个踩的坑吧~
+场景：
+使用GPU将视频转码为webm 编码 libvpx-vp9 表现:
+不使用GPU一切正常 开启autorotate 报错 关闭autorotate 不报错 但是转码超级慢(感觉GPU没毛用) 肯定先看后者,转码慢不解决,说啥都没用~
+ …
+			</description>
+		</item>
+		<item>
+			<title>各语言的一些对比</title>
+			<link>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</link>
+			<pubDate>Fri, 01 Apr 2022 16:11:47 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</guid>
+			<description>
+			最近对接的事比较多，java 摸鱼 学习 一直没有进度
 担心前一段学习白费，把收集到的各语言的一些对比整理了一下
 顺便熟悉一下markdown的table语法 -_-
-   项/语言 GO PHP Java     基本类型 整数类型：uint8/16/32/64 , int8/16/32/64 , int浮点数类型：float32，float64复数类型：complex64, complex128字符类型：byte, rune字符串类型： string布尔类型：bool指针类型：uintptr 标量类型：bool, string, integer, float 符合数据类型：array, object特殊类型： resource, null 整数类型：byte，short，int，long浮点数类型：float，double字符类型：char布尔类型：boolean字符串类型: String (注意是大写S ， 为引用类型)   强制类型转换 int64(v) (int)$v intval($v) settype($v, &amp;quot;int&amp;quot;) (int)v   多行字符串 ss := `&amp;hellip;.` 结束反引号不需要顶格 $ss= &amp;laquo;&amp;lt;EOT&amp;hellip;EOT;结束标记(EOT)需要顶格 var ss = &amp;quot;&amp;quot;&amp;quot;&amp;hellip;&amp;quot;&amp;quot;&amp;quot;;结束三个双引号不需要顶格   输入输出 fmt echo Scanner sc = new Scanner(System.</description>
-    </item>
-    
-    <item>
-      <title>Kratos Rpc尝试的二三事</title>
-      <link>https://fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
-      <pubDate>Thu, 31 Mar 2022 08:14:27 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
-      <description>起  经过这一段时间对kratos框架的了解，也算大致熟悉了整体的使用流程，以及DDD的一些思想。 恰巧我台有个c端转码的业务，为了不让机房里的那些T4闲置落灰，遂决定用kratos把玩一番。
- 析  既然是使用GPU转码，就先确认GPU转码的可行性。由于我台目前整体已经推成了容器化的部署， 所以测试Dockerfile的内容大概就是如下三步：
- 加载GPU官方基础镜像-(动辄几个G，确实大&amp;hellip;) 添加ffmpeg源码进行编译安装-(源安装的ffmpeg不能使用GPU) 添加自己转码服务程序   坑1  等了半天，镜像终于制作好，本机没有好的显卡，也为了和生产环境保持一致，推到服务器进行 测试，打tag， 推harbor, rancher部署（指定调度到带GPU的node）。exec进去看看驱动 是否一切正常：
-[root@transcode-6b9c5cb9f6-98hht app]# nvidia-smi Thu Mar 31 08:38:28 2022 +-----------------------------------------------------------------------------+ | NVIDIA-SMI 440.56 Driver Version: 440.56 CUDA Version: 10.2 | |-------------------------------+----------------------+----------------------+ | GPU Name Persistence-M| Bus-Id Disp.A | Volatile Uncorr. ECC | | Fan Temp Perf Pwr:Usage/Cap| Memory-Usage | GPU-Util Compute M. | |===============================+======================+======================| | 0 GRID T4-8Q On | 00000000:00:0A.</description>
-    </item>
-    
-    <item>
-      <title>kubectl cp 的限制</title>
-      <link>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</link>
-      <pubDate>Tue, 29 Mar 2022 12:55:56 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</guid>
-      <description>kubectl cp  本地文件复制到pod内  kubectl cp D:/1/example.txt podname:/var/www/html/public/a.txt kubectl cp example.txt podname:public/a.txt  本地及远程地址都可使用绝对路径或者相对路径
-  其中本地地址的相对目录为当前kubectl执行命令的目录
-  远程地址的目录为pod workdir的目录
-  pod内文件复制到本地  kubectl cp podname:public/a.txt b.txt  本地及远程地址都只能使用相对路径
-  而且本地的路径不能有层级
- </description>
-    </item>
-    
-    <item>
-      <title>Rebegin</title>
-      <link>https://fulltimelink.github.io/post/rebegin/</link>
-      <pubDate>Tue, 29 Mar 2022 10:22:40 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/rebegin/</guid>
-      <description>志始于此，愿达于彼 fmt.Println(&amp;#34;Hello World! again!&amp;#34;) </description>
-    </item>
-    
-  </channel>
+项/语言 GO PHP Java 基本类型 整数类型：uint8/16/32/64 , …
+			</description>
+		</item>
+		<item>
+			<title>Kratos Rpc尝试的二三事</title>
+			<link>https://fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
+			<pubDate>Thu, 31 Mar 2022 08:14:27 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
+			<description>
+			 起 经过这一段时间对kratos框架的了解，也算大致熟悉了整体的使用流程，以及DDD的一些思想。 恰巧我台有个c端转码的业务，为了不让机房里的那些T4闲置落灰，遂决定用kratos把玩一番。
+析 既然是使用GPU转码，就先确认GPU转码的可行性。由于我台目前整体已经推成了容器化 …
+			</description>
+		</item>
+		<item>
+			<title>kubectl cp 的限制</title>
+			<link>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</link>
+			<pubDate>Tue, 29 Mar 2022 12:55:56 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</guid>
+			<description>
+			kubectl cp 本地文件复制到pod内 kubectl cp D:/1/example.txt podname:/var/www/html/public/a.txt kubectl cp example.txt podname:public/a.txt 本地及远程地址都可使 …
+			</description>
+		</item>
+		<item>
+			<title>Rebegin</title>
+			<link>https://fulltimelink.github.io/post/rebegin/</link>
+			<pubDate>Tue, 29 Mar 2022 10:22:40 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/rebegin/</guid>
+			<description>
+			志始于此，愿达于彼 fmt.Println("Hello World! again!") 
+			</description>
+		</item>
+	</channel>
 </rss>

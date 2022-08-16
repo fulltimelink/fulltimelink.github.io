@@ -1,64 +1,121 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<html lang="en">
 <head>
-  <link href="https://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.96.0" />
-
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>微信H5使用video &middot; Fulltime Link</title>
-  <meta name="description" content="" />
-
-  
-  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/hyde.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+<meta charset="UTF-8">
+<title>微信H5使用video | 旧事重提</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.101.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="fulltimelink">
+<meta name="keywords" content="h5">
+<link rel="stylesheet" type="text/css" media="screen" href="/css/normalize.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/all.css" />
 
 
-  
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
 
-  
-  
+
+<meta property="og:title" content="微信H5使用video" />
+<meta property="og:description" content="日常摸鱼工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动
+暂停再播又会恢复正常
+经过编写简单demo测试分析，环境如下 ：
+安卓木有问题，只有IOS下才会出现 video标签使用了poster属性设置封面图 IOS下非微信浏览器正常播放 检测了视频，标准H264 mpeg-part 10 所以应该和视频没多大关系~
+这可能又触发了微信的某个BUG, 先搜索一下吧：
+社区有人反馈，说是加上 custom-cache=&ldquo;false&rdquo; , 经测试无效 这个好像是微信小程序video组件的
+然后又分析了下video的使用方式是否有啥特殊的
+&lt;video poster=&#34;&#34;&gt; &lt;source src=&#34;****.mp4&#34;&gt;&lt;/source&gt; &lt;/video&gt; 将source 去掉 src 移入到video标签中 IOS下测试正常&hellip;
+赶紧看下 mdn 并没有发现video 对source有啥特殊的限制
+追不出来啥了&hellip;
+结论：微信&#43;IOS环境下&#43;poster的情况下，H5中video标签不可使用source指定src!!!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fulltimelink.github.io/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-04-19T10:00:28+08:00" />
+<meta property="article:modified_time" content="2022-04-19T10:00:28+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="微信H5使用video"/>
+<meta name="twitter:description" content="日常摸鱼工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动
+暂停再播又会恢复正常
+经过编写简单demo测试分析，环境如下 ：
+安卓木有问题，只有IOS下才会出现 video标签使用了poster属性设置封面图 IOS下非微信浏览器正常播放 检测了视频，标准H264 mpeg-part 10 所以应该和视频没多大关系~
+这可能又触发了微信的某个BUG, 先搜索一下吧：
+社区有人反馈，说是加上 custom-cache=&ldquo;false&rdquo; , 经测试无效 这个好像是微信小程序video组件的
+然后又分析了下video的使用方式是否有啥特殊的
+&lt;video poster=&#34;&#34;&gt; &lt;source src=&#34;****.mp4&#34;&gt;&lt;/source&gt; &lt;/video&gt; 将source 去掉 src 移入到video标签中 IOS下测试正常&hellip;
+赶紧看下 mdn 并没有发现video 对source有啥特殊的限制
+追不出来啥了&hellip;
+结论：微信&#43;IOS环境下&#43;poster的情况下，H5中video标签不可使用source指定src!!!"/>
+
+<meta itemprop="name" content="微信H5使用video">
+<meta itemprop="description" content="日常摸鱼工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动
+暂停再播又会恢复正常
+经过编写简单demo测试分析，环境如下 ：
+安卓木有问题，只有IOS下才会出现 video标签使用了poster属性设置封面图 IOS下非微信浏览器正常播放 检测了视频，标准H264 mpeg-part 10 所以应该和视频没多大关系~
+这可能又触发了微信的某个BUG, 先搜索一下吧：
+社区有人反馈，说是加上 custom-cache=&ldquo;false&rdquo; , 经测试无效 这个好像是微信小程序video组件的
+然后又分析了下video的使用方式是否有啥特殊的
+&lt;video poster=&#34;&#34;&gt; &lt;source src=&#34;****.mp4&#34;&gt;&lt;/source&gt; &lt;/video&gt; 将source 去掉 src 移入到video标签中 IOS下测试正常&hellip;
+赶紧看下 mdn 并没有发现video 对source有啥特殊的限制
+追不出来啥了&hellip;
+结论：微信&#43;IOS环境下&#43;poster的情况下，H5中video标签不可使用source指定src!!!"><meta itemprop="datePublished" content="2022-04-19T10:00:28+08:00" />
+<meta itemprop="dateModified" content="2022-04-19T10:00:28+08:00" />
+<meta itemprop="wordCount" content="35">
+<meta itemprop="keywords" content="h5," />
 </head>
+<body>
+<header>
+<div id="titletext">
+<h2 id="titleonly"><a href="https://fulltimelink.github.io/">旧事重提</a></h2>
+</div>
+<div id="title-social">
+</div>
+<div id="mainmenu">
+<nav>
+<ul>
+<li><a href="/tags/algorithm">Algorithm</a></li>
+<li><a href="/tags/go">Go</a></li>
+<li><a href="/tags/h5">H5</a></li>
+<li><a href="/tags/java">Java</a></li>
+<li><a href="/tags/javascript">Javascript</a></li>
+<li><a href="/tags/kubernetes">Kubernetes</a></li>
+<li><a href="/tags/linux">Linux</a></li>
+<li><a href="/tags/php">Php</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main>
+<div class="post">
+<article>
+<div class="post-header">
+<div class="meta">
+<div class="date">
+<span class="day">19</span>
+<span class="rest">Apr 2022</span>
+</div>
+</div>
+<div class="matter">
+<h1 class="title">微信H5使用video</h1>
+<p class="post-meta">
+<span class="post-meta">
 
-  <body class=" ">
-  <aside class="sidebar">
-  <div class="container">
-    <div class="sidebar-about">
-      <a href="https://fulltimelink.github.io/"><h1>Fulltime Link</h1></a>
-    <nav>
-      <ul class="sidebar-nav">
-        <li><a href="https://fulltimelink.github.io/">Home</a> </li>
-        <li><a href="/tags/algorithm"> Algorithm </a></li><li><a href="/tags/go"> Go </a></li><li><a href="/tags/h5"> H5 </a></li><li><a href="/tags/java"> Java </a></li><li><a href="/tags/javascript"> Javascript </a></li><li><a href="/tags/kubernetes"> Kubernetes </a></li><li><a href="/tags/linux"> Linux </a></li><li><a href="/tags/php"> Php </a></li>
-      </ul>
-    </nav>
 
-    </div>
-    <div class="sidebar-about sidebar-sticky">
-      <p class="lead">
-        
-        <p class="xlp">最难过的事情不是遇不见。而是遇见了，得到了，却又匆忙失去。求而不得，舍而不能，得而不惜，然后心上便因此纠结成了一道疤。它让你什么时候疼，就什么时候疼！</p>
-        
-      </p>
-      <p>&copy; 2022. All rights reserved. </p>
-    </div>
-  </div>
-  <style type="text/css">
-    .xlp{text-indent: 2em !important;font-size:0.9rem;text-decoration:underline;}
-  </style>
-</aside>
 
-    <main class="content container">
-    <div class="post">
-  <h1>微信H5使用video</h1>
-  <time datetime=2022-04-19T10:00:28&#43;0800 class="post-date">Tue, Apr 19, 2022</time>
-  <p>日常<del>摸鱼</del>工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动</p>
+
+
+<i class="fas fa-user"></i>&nbsp;
+
+fulltimelink
+
+
+
+</span>
+
+</p>
+</div>
+</div>
+<div class="markdown">
+<p>日常<del>摸鱼</del>工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动</p>
 <p>暂停再播又会恢复正常</p>
 <p>经过编写简单demo测试分析，环境如下 ：</p>
 <ul>
@@ -75,39 +132,31 @@
 </span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">video</span>&gt;
 </span></span></code></pre></div><p>将source 去掉  src 移入到video标签中 IOS下测试正常&hellip;</p>
 <p>赶紧看下 mdn  并没有发现video 对source有啥特殊的限制</p>
-<p><img src="/20220419/1.jpg" alt="兼容性"></p>
+<p><figure>
+  <img src="/20220419/1.jpg" alt="兼容性"  />
+</figure></p>
 <p>追不出来啥了&hellip;</p>
 <p><strong>结论：微信+IOS环境下+poster的情况下，H5中video标签不可使用source指定src!!!</strong></p>
 <hr>
-<p><img src="/20220419.png" alt="20220419"></p>
+<p><figure>
+  <img src="/20220419.png" alt="20220419"  />
+</figure></p>
 
 </div>
+<div class="tags">
+<div class="taxosfloating_left">
+<p>Tags</p>
+</div>
+<div class="termsfloating_right">
+<p>
+<a href="/tags/h5/">h5</a>
+</p>
+</div>
+<div class="clearit"></div>
+</div>
+</article>
+</div>
+</main><script src="/js/dark-mode.js"></script>
 
-<h2>Comments</h2>
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "fulltimelink" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </main>
-
-    
-      
-    
-  </body>
+</body>
 </html>

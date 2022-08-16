@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>java on Fulltime Link</title>
-    <link>https://fulltimelink.github.io/tags/java/</link>
-    <description>Recent content in java on Fulltime Link</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <lastBuildDate>Wed, 13 Apr 2022 08:54:18 +0800</lastBuildDate><atom:link href="https://fulltimelink.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>梳理一下排序算法</title>
-      <link>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
-      <pubDate>Wed, 13 Apr 2022 08:54:18 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
-      <description>最近看java的教程，对比了一下，发现java对原生类型的逆向排序支持较弱不够友好
+	<channel>
+		<title>java on 旧事重提</title>
+		<link>https://fulltimelink.github.io/tags/java/</link>
+		<description>Recent content in java on fulltimelink.github.io</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>zh-CN</language>
+		<lastBuildDate>Wed, 13 Apr 2022 08:54:18 +0800</lastBuildDate>
+		<atom:link href="https://fulltimelink.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+		<item>
+			<title>梳理一下排序算法</title>
+			<link>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+			<pubDate>Wed, 13 Apr 2022 08:54:18 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
+			<description>
+			最近看java的教程，对比了一下，发现java对原生类型的逆向排序支持较弱不够友好
 php 有rsort krsort arsort
 go 有 sort.Reverse 而且原生类型到封装类型也有方便的转换 sort.IntSlice([]int)
-java Collections.reverseOrder 则并不适用于原生类型
-于是，再复习一下基本用不到快忘完的排序算法：
-以降序为例 选择排序  内循环内不交换，只查找目标元素，然后外循环内将目标元素与其应该在的位置进行交换 双循环  内循环 第次循环找出当前剩下元素中的最大值的索引  循环范围 1 - n   外循环 将内循环找出的最大元素与当前遍历的元素交换  循环范围 0 - (n-1)      // -- @# 选择排序 public void SelectDescSort(int[] args){  for(int i=0;i&amp;lt;args.length-1;i++){  int index =i;  for(int j=i+1;j&amp;lt;args.length;j++){  if(args[index] &amp;lt; args[j]){  index =j;  }  }  int tmp = args[i];  args[i] = args[index];  args[index] = tmp;  } }  5 8 5 2 9 一次交换后，并不能实现5的稳定性，所以选择排序不是稳定性排序  冒泡排序  每次内循环都进行交换，内循环结束目标元素所在位置即为预期位置 双循环  内循环 将外循环控制的当前队列中的元素两两比较，将目标元素移动到尾部  循环范围 0 - (n-外循环索引-1)   外循环 控制当前比较的元素是第几个  循环范围 0 - (n-1)      // -- @# 冒泡排序 public void BubbleDescSort(int[] args){  if(2 &amp;gt; args.</description>
-    </item>
-    
-    <item>
-      <title>各语言的一些对比</title>
-      <link>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</link>
-      <pubDate>Fri, 01 Apr 2022 16:11:47 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</guid>
-      <description>最近对接的事比较多，java 摸鱼 学习 一直没有进度
+java …
+			</description>
+		</item>
+		<item>
+			<title>各语言的一些对比</title>
+			<link>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</link>
+			<pubDate>Fri, 01 Apr 2022 16:11:47 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</guid>
+			<description>
+			最近对接的事比较多，java 摸鱼 学习 一直没有进度
 担心前一段学习白费，把收集到的各语言的一些对比整理了一下
 顺便熟悉一下markdown的table语法 -_-
-   项/语言 GO PHP Java     基本类型 整数类型：uint8/16/32/64 , int8/16/32/64 , int浮点数类型：float32，float64复数类型：complex64, complex128字符类型：byte, rune字符串类型： string布尔类型：bool指针类型：uintptr 标量类型：bool, string, integer, float 符合数据类型：array, object特殊类型： resource, null 整数类型：byte，short，int，long浮点数类型：float，double字符类型：char布尔类型：boolean字符串类型: String (注意是大写S ， 为引用类型)   强制类型转换 int64(v) (int)$v intval($v) settype($v, &amp;quot;int&amp;quot;) (int)v   多行字符串 ss := `&amp;hellip;.` 结束反引号不需要顶格 $ss= &amp;laquo;&amp;lt;EOT&amp;hellip;EOT;结束标记(EOT)需要顶格 var ss = &amp;quot;&amp;quot;&amp;quot;&amp;hellip;&amp;quot;&amp;quot;&amp;quot;;结束三个双引号不需要顶格   输入输出 fmt echo Scanner sc = new Scanner(System.</description>
-    </item>
-    
-  </channel>
+项/语言 GO PHP Java 基本类型 整数类型：uint8/16/32/64 , …
+			</description>
+		</item>
+	</channel>
 </rss>

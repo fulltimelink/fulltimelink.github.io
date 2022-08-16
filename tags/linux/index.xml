@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>linux on Fulltime Link</title>
-    <link>https://fulltimelink.github.io/tags/linux/</link>
-    <description>Recent content in linux on Fulltime Link</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <lastBuildDate>Sat, 02 Apr 2022 18:24:39 +0800</lastBuildDate><atom:link href="https://fulltimelink.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>关于libvpx编码</title>
-      <link>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</link>
-      <pubDate>Sat, 02 Apr 2022 18:24:39 +0800</pubDate>
-      
-      <guid>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</guid>
-      <description>过节了，加班写个踩的坑吧~
-  场景：
- 使用GPU将视频转码为webm 编码 libvpx-vp9    表现:
- 不使用GPU一切正常 开启autorotate 报错 关闭autorotate 不报错 但是转码超级慢(感觉GPU没毛用)    肯定先看后者,转码慢不解决,说啥都没用~
-上ffmpeg codecs
- DEV.LS h264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (decoders: h264 h264_cuvid ) (encoders: libx264 libx264rgb h264_nvenc nvenc nvenc_h264 )  DEV.L. hevc H.265 / HEVC (High Efficiency Video Coding) (decoders: hevc hevc_cuvid ) (encoders: nvenc_hevc hevc_nvenc )  DEVIL. mjpeg Motion JPEG (decoders: mjpeg mjpeg_cuvid )  DEV.</description>
-    </item>
-    
-  </channel>
+	<channel>
+		<title>linux on 旧事重提</title>
+		<link>https://fulltimelink.github.io/tags/linux/</link>
+		<description>Recent content in linux on fulltimelink.github.io</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>zh-CN</language>
+		<lastBuildDate>Sat, 02 Apr 2022 18:24:39 +0800</lastBuildDate>
+		<atom:link href="https://fulltimelink.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+		<item>
+			<title>关于libvpx编码</title>
+			<link>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</link>
+			<pubDate>Sat, 02 Apr 2022 18:24:39 +0800</pubDate>
+			<guid>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</guid>
+			<description>
+			过节了，加班写个踩的坑吧~
+场景：
+使用GPU将视频转码为webm 编码 libvpx-vp9 表现:
+不使用GPU一切正常 开启autorotate 报错 关闭autorotate 不报错 但是转码超级慢(感觉GPU没毛用) 肯定先看后者,转码慢不解决,说啥都没用~
+ …
+			</description>
+		</item>
+	</channel>
 </rss>

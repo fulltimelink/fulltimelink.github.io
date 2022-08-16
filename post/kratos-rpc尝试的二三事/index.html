@@ -1,64 +1,100 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<html lang="en">
 <head>
-  <link href="https://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.96.0" />
-
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Kratos Rpc尝试的二三事 &middot; Fulltime Link</title>
-  <meta name="description" content="" />
-
-  
-  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://fulltimelink.github.io/css/hyde.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+<meta charset="UTF-8">
+<title>Kratos Rpc尝试的二三事 | 旧事重提</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.101.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="fulltimelink">
+<meta name="keywords" content="go">
+<link rel="stylesheet" type="text/css" media="screen" href="/css/normalize.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/all.css" />
 
 
-  
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
 
-  
-  
+
+<meta property="og:title" content="Kratos Rpc尝试的二三事" />
+<meta property="og:description" content="起 经过这一段时间对kratos框架的了解，也算大致熟悉了整体的使用流程，以及DDD的一些思想。 恰巧我台有个c端转码的业务，为了不让机房里的那些T4闲置落灰，遂决定用kratos把玩一番。
+析 既然是使用GPU转码，就先确认GPU转码的可行性。由于我台目前整体已经推成了容器化的部署， 所以测试Dockerfile的内容大概就是如下三步：
+加载GPU官方基础镜像-(动辄几个G，确实大&hellip;) 添加ffmpeg源码进行编译安装-(源安装的ffmpeg不能使用GPU) 添加自己转码服务程序 坑1 等了半天，镜像终于制作好，本机没有好的显卡，也为了和生产环境保持一致，推到服务器进行 测试，打tag， 推harbor, rancher部署（指定调度到带GPU的node）。exec进去看看驱动 是否一切正常：
+[root@transcode-6b9c5cb9f6-98hht app]# nvidia-smi Thu Mar 31 08:38:28 2022 &#43;-----------------------------------------------------------------------------&#43; | NVIDIA-SMI 440.56 Driver Version: 440.56 CUDA Version: 10.2 | |-------------------------------&#43;----------------------&#43;----------------------&#43; | GPU Name Persistence-M| Bus-Id Disp.A | Volatile Uncorr. ECC | | Fan Temp Perf Pwr:Usage/Cap| Memory-Usage | GPU-Util Compute M. | |===============================&#43;======================&#43;======================| | 0 GRID T4-8Q On | 00000000:00:0A.0 Off | N/A | | N/A N/A P8 N/A / N/A | 1104MiB / 8192MiB | 0% Default | &#43;-------------------------------&#43;----------------------&#43;----------------------&#43; &#43;-----------------------------------------------------------------------------&#43; | Processes: GPU Memory | | GPU PID Type Process name Usage | |=============================================================================| | No running processes found | &#43;-----------------------------------------------------------------------------&#43; [root@transcode-6b9c5cb9f6-98hht app]# ffmpeg -codecs | grep cuvid ffmpeg version N-102049-gcc7943e803 Copyright (c) 2000-2021 the FFmpeg developers built with gcc 4." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-03-31T08:14:27+08:00" />
+<meta property="article:modified_time" content="2022-03-31T08:14:27+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kratos Rpc尝试的二三事"/>
+<meta name="twitter:description" content="起 经过这一段时间对kratos框架的了解，也算大致熟悉了整体的使用流程，以及DDD的一些思想。 恰巧我台有个c端转码的业务，为了不让机房里的那些T4闲置落灰，遂决定用kratos把玩一番。
+析 既然是使用GPU转码，就先确认GPU转码的可行性。由于我台目前整体已经推成了容器化的部署， 所以测试Dockerfile的内容大概就是如下三步：
+加载GPU官方基础镜像-(动辄几个G，确实大&hellip;) 添加ffmpeg源码进行编译安装-(源安装的ffmpeg不能使用GPU) 添加自己转码服务程序 坑1 等了半天，镜像终于制作好，本机没有好的显卡，也为了和生产环境保持一致，推到服务器进行 测试，打tag， 推harbor, rancher部署（指定调度到带GPU的node）。exec进去看看驱动 是否一切正常：
+[root@transcode-6b9c5cb9f6-98hht app]# nvidia-smi Thu Mar 31 08:38:28 2022 &#43;-----------------------------------------------------------------------------&#43; | NVIDIA-SMI 440.56 Driver Version: 440.56 CUDA Version: 10.2 | |-------------------------------&#43;----------------------&#43;----------------------&#43; | GPU Name Persistence-M| Bus-Id Disp.A | Volatile Uncorr. ECC | | Fan Temp Perf Pwr:Usage/Cap| Memory-Usage | GPU-Util Compute M. | |===============================&#43;======================&#43;======================| | 0 GRID T4-8Q On | 00000000:00:0A.0 Off | N/A | | N/A N/A P8 N/A / N/A | 1104MiB / 8192MiB | 0% Default | &#43;-------------------------------&#43;----------------------&#43;----------------------&#43; &#43;-----------------------------------------------------------------------------&#43; | Processes: GPU Memory | | GPU PID Type Process name Usage | |=============================================================================| | No running processes found | &#43;-----------------------------------------------------------------------------&#43; [root@transcode-6b9c5cb9f6-98hht app]# ffmpeg -codecs | grep cuvid ffmpeg version N-102049-gcc7943e803 Copyright (c) 2000-2021 the FFmpeg developers built with gcc 4."/>
+
+<meta itemprop="name" content="Kratos Rpc尝试的二三事">
+<meta itemprop="description" content="起 经过这一段时间对kratos框架的了解，也算大致熟悉了整体的使用流程，以及DDD的一些思想。 恰巧我台有个c端转码的业务，为了不让机房里的那些T4闲置落灰，遂决定用kratos把玩一番。
+析 既然是使用GPU转码，就先确认GPU转码的可行性。由于我台目前整体已经推成了容器化的部署， 所以测试Dockerfile的内容大概就是如下三步：
+加载GPU官方基础镜像-(动辄几个G，确实大&hellip;) 添加ffmpeg源码进行编译安装-(源安装的ffmpeg不能使用GPU) 添加自己转码服务程序 坑1 等了半天，镜像终于制作好，本机没有好的显卡，也为了和生产环境保持一致，推到服务器进行 测试，打tag， 推harbor, rancher部署（指定调度到带GPU的node）。exec进去看看驱动 是否一切正常：
+[root@transcode-6b9c5cb9f6-98hht app]# nvidia-smi Thu Mar 31 08:38:28 2022 &#43;-----------------------------------------------------------------------------&#43; | NVIDIA-SMI 440.56 Driver Version: 440.56 CUDA Version: 10.2 | |-------------------------------&#43;----------------------&#43;----------------------&#43; | GPU Name Persistence-M| Bus-Id Disp.A | Volatile Uncorr. ECC | | Fan Temp Perf Pwr:Usage/Cap| Memory-Usage | GPU-Util Compute M. | |===============================&#43;======================&#43;======================| | 0 GRID T4-8Q On | 00000000:00:0A.0 Off | N/A | | N/A N/A P8 N/A / N/A | 1104MiB / 8192MiB | 0% Default | &#43;-------------------------------&#43;----------------------&#43;----------------------&#43; &#43;-----------------------------------------------------------------------------&#43; | Processes: GPU Memory | | GPU PID Type Process name Usage | |=============================================================================| | No running processes found | &#43;-----------------------------------------------------------------------------&#43; [root@transcode-6b9c5cb9f6-98hht app]# ffmpeg -codecs | grep cuvid ffmpeg version N-102049-gcc7943e803 Copyright (c) 2000-2021 the FFmpeg developers built with gcc 4."><meta itemprop="datePublished" content="2022-03-31T08:14:27+08:00" />
+<meta itemprop="dateModified" content="2022-03-31T08:14:27+08:00" />
+<meta itemprop="wordCount" content="570">
+<meta itemprop="keywords" content="go," />
 </head>
+<body>
+<header>
+<div id="titletext">
+<h2 id="titleonly"><a href="https://fulltimelink.github.io/">旧事重提</a></h2>
+</div>
+<div id="title-social">
+</div>
+<div id="mainmenu">
+<nav>
+<ul>
+<li><a href="/tags/algorithm">Algorithm</a></li>
+<li><a href="/tags/go">Go</a></li>
+<li><a href="/tags/h5">H5</a></li>
+<li><a href="/tags/java">Java</a></li>
+<li><a href="/tags/javascript">Javascript</a></li>
+<li><a href="/tags/kubernetes">Kubernetes</a></li>
+<li><a href="/tags/linux">Linux</a></li>
+<li><a href="/tags/php">Php</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main>
+<div class="post">
+<article>
+<div class="post-header">
+<div class="meta">
+<div class="date">
+<span class="day">31</span>
+<span class="rest">Mar 2022</span>
+</div>
+</div>
+<div class="matter">
+<h1 class="title">Kratos Rpc尝试的二三事</h1>
+<p class="post-meta">
+<span class="post-meta">
 
-  <body class=" ">
-  <aside class="sidebar">
-  <div class="container">
-    <div class="sidebar-about">
-      <a href="https://fulltimelink.github.io/"><h1>Fulltime Link</h1></a>
-    <nav>
-      <ul class="sidebar-nav">
-        <li><a href="https://fulltimelink.github.io/">Home</a> </li>
-        <li><a href="/tags/algorithm"> Algorithm </a></li><li><a href="/tags/go"> Go </a></li><li><a href="/tags/h5"> H5 </a></li><li><a href="/tags/java"> Java </a></li><li><a href="/tags/javascript"> Javascript </a></li><li><a href="/tags/kubernetes"> Kubernetes </a></li><li><a href="/tags/linux"> Linux </a></li><li><a href="/tags/php"> Php </a></li>
-      </ul>
-    </nav>
 
-    </div>
-    <div class="sidebar-about sidebar-sticky">
-      <p class="lead">
-        
-        <p class="xlp">最难过的事情不是遇不见。而是遇见了，得到了，却又匆忙失去。求而不得，舍而不能，得而不惜，然后心上便因此纠结成了一道疤。它让你什么时候疼，就什么时候疼！</p>
-        
-      </p>
-      <p>&copy; 2022. All rights reserved. </p>
-    </div>
-  </div>
-  <style type="text/css">
-    .xlp{text-indent: 2em !important;font-size:0.9rem;text-decoration:underline;}
-  </style>
-</aside>
 
-    <main class="content container">
-    <div class="post">
-  <h1>Kratos Rpc尝试的二三事</h1>
-  <time datetime=2022-03-31T08:14:27&#43;0800 class="post-date">Thu, Mar 31, 2022</time>
-  <ul>
+
+
+<i class="fas fa-user"></i>&nbsp;
+
+fulltimelink
+
+
+
+</span>
+
+</p>
+</div>
+</div>
+<div class="markdown">
+<ul>
 <li>起</li>
 </ul>
 <p>经过这一段时间对kratos框架的了解，也算大致熟悉了整体的使用流程，以及DDD的一些思想。
@@ -121,13 +157,17 @@
 </span></span></code></pre></div><p>-_-  一切OK，c端转码主要是为了移动端观看，h264_nvenc标准转码就行</p>
 <p>kubectl cp 进去一个MOV文件转码试试</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ffmpeg -y -hwaccel cuvid  -i 1.MOV -c:v h264_nvenc output.mp4
-</span></span></code></pre></div><p><img src="/20220331/1.png" alt="GPU转码"></p>
+</span></span></code></pre></div><p><figure>
+  <img src="/20220331/1.png" alt="GPU转码"  />
+</figure></p>
 <p>见红，糟糕，用我糟糕的英语大概猜测了一下，没检测到显卡？什么鬼&hellip;</p>
 <p>CPU转码测试一下</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ffmpeg -y  -i 1.MOV -c:v h264_nvenc output.mp4
 </span></span></code></pre></div><p>一切正常，嗯&hellip; 看来就是GPU的问题了，但是使用smi查看又是正常的，这什么鬼？
 没办法，去看看官方<strong>英文</strong>文档吧&hellip;
-<img src="/20220331/1.jpg" alt="全英文"></p>
+<figure>
+  <img src="/20220331/1.jpg" alt="全英文"  />
+</figure></p>
 <p><em>-</em>, 少了环境变量，设置上&hellip;</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">ENV</span> NVIDA_VISIBLE_DEVICES <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;all&#34;</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> NVIDIA_DRIVER_CAPABILITIES <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;video,compute,utility&#34;</span><span style="color:#960050;background-color:#1e0010">
@@ -137,7 +177,9 @@
 </ul>
 <p>解决了环境问题，再尝试手动转码一次看看</p>
 <p>啪~ 又见红了~</p>
-<p><img src="/20220331/2.png" alt="again"></p>
+<p><figure>
+  <img src="/20220331/2.png" alt="again"  />
+</figure></p>
 <p>看这错误，第一帧处理就出错了&hellip;</p>
 <p>怎么会有auto_scaler? 并没有指定转码后的大小啊？莫非视频有问题？</p>
 <p>加个不旋转试试~</p>
@@ -210,37 +252,29 @@
 f8d0be93-b086-11ec-b07d-186024a977aa
 </code></pre><p>嗯，自动生成的已经是随机的了，细节回头再追，先确认下BFF到backend之间是否走的rpc</p>
 <p>wireshark走起，附加上protobuf文件，解码为http2</p>
-<p><img src="/20220331/2.jpg" alt="wireshark"></p>
+<p><figure>
+  <img src="/20220331/2.jpg" alt="wireshark"  />
+</figure></p>
 <hr>
-<p><img src="/20220331.jpg" alt="wireshark"></p>
+<p><figure>
+  <img src="/20220331.jpg" alt="wireshark"  />
+</figure></p>
 
 </div>
+<div class="tags">
+<div class="taxosfloating_left">
+<p>Tags</p>
+</div>
+<div class="termsfloating_right">
+<p>
+<a href="/tags/go/">go</a>
+</p>
+</div>
+<div class="clearit"></div>
+</div>
+</article>
+</div>
+</main><script src="/js/dark-mode.js"></script>
 
-<h2>Comments</h2>
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "fulltimelink" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </main>
-
-    
-      
-    
-  </body>
+</body>
 </html>
