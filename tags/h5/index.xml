@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>h5 on 旧事重提</title>
-		<link>https://fulltimelink.github.io/tags/h5/</link>
-		<description>Recent content in h5 on fulltimelink.github.io</description>
+		<link>http://fulltime.link/tags/h5/</link>
+		<description>Recent content in h5 on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
 		<lastBuildDate>Tue, 19 Apr 2022 10:00:28 +0800</lastBuildDate>
-		<atom:link href="https://fulltimelink.github.io/tags/h5/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="http://fulltime.link/tags/h5/index.xml" rel="self" type="application/rss+xml" />
 		<item>
 			<title>微信H5使用video</title>
-			<link>https://fulltimelink.github.io/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/</link>
+			<link>http://fulltime.link/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/</link>
 			<pubDate>Tue, 19 Apr 2022 10:00:28 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/</guid>
+			<guid>http://fulltime.link/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/</guid>
 			<description>
 			日常摸鱼工作时，收到反馈，有个活动视频在微信内有声音但是画面卡住不动
 暂停再播又会恢复正常

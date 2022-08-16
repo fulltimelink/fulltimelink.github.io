@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>algorithm on 旧事重提</title>
-		<link>https://fulltimelink.github.io/tags/algorithm/</link>
-		<description>Recent content in algorithm on fulltimelink.github.io</description>
+		<link>http://fulltime.link/tags/algorithm/</link>
+		<description>Recent content in algorithm on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
 		<lastBuildDate>Wed, 13 Apr 2022 08:54:18 +0800</lastBuildDate>
-		<atom:link href="https://fulltimelink.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="http://fulltime.link/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
 		<item>
 			<title>梳理一下排序算法</title>
-			<link>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+			<link>http://fulltime.link/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
 			<pubDate>Wed, 13 Apr 2022 08:54:18 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
+			<guid>http://fulltime.link/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
 			<description>
 			最近看java的教程，对比了一下，发现java对原生类型的逆向排序支持较弱不够友好
 php 有rsort krsort arsort

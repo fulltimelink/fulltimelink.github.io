@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>linux on 旧事重提</title>
-		<link>https://fulltimelink.github.io/tags/linux/</link>
-		<description>Recent content in linux on fulltimelink.github.io</description>
+		<link>http://fulltime.link/tags/linux/</link>
+		<description>Recent content in linux on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
 		<lastBuildDate>Sat, 02 Apr 2022 18:24:39 +0800</lastBuildDate>
-		<atom:link href="https://fulltimelink.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="http://fulltime.link/tags/linux/index.xml" rel="self" type="application/rss+xml" />
 		<item>
 			<title>关于libvpx编码</title>
-			<link>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</link>
+			<link>http://fulltime.link/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</link>
 			<pubDate>Sat, 02 Apr 2022 18:24:39 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</guid>
+			<guid>http://fulltime.link/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</guid>
 			<description>
 			过节了，加班写个踩的坑吧~
 场景：

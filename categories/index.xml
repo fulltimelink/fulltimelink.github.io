@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Categories on 旧事重提</title>
-		<link>https://fulltimelink.github.io/categories/</link>
-		<description>Recent content in Categories on fulltimelink.github.io</description>
+		<link>http://fulltime.link/categories/</link>
+		<description>Recent content in Categories on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
-		<atom:link href="https://fulltimelink.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="http://fulltime.link/categories/index.xml" rel="self" type="application/rss+xml" />
 	</channel>
 </rss>

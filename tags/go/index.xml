@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>go on 旧事重提</title>
-		<link>https://fulltimelink.github.io/tags/go/</link>
-		<description>Recent content in go on fulltimelink.github.io</description>
+		<link>http://fulltime.link/tags/go/</link>
+		<description>Recent content in go on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
 		<lastBuildDate>Fri, 29 Apr 2022 14:32:51 +0800</lastBuildDate>
-		<atom:link href="https://fulltimelink.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="http://fulltime.link/tags/go/index.xml" rel="self" type="application/rss+xml" />
 		<item>
 			<title>rancher下kratos服务”内存泄漏”的一次排查</title>
-			<link>https://fulltimelink.github.io/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</link>
+			<link>http://fulltime.link/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</link>
 			<pubDate>Fri, 29 Apr 2022 14:32:51 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</guid>
+			<guid>http://fulltime.link/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</guid>
 			<description>
 			书接上文，服务上线后，经过一段时间的运行后发现rancher监控上内存有点异常
 疑似”内存泄漏“ 明天就五-了，这不是找事么_-_ [虽然因为疫情不能出去逛]
@@ -23,9 +23,9 @@
 		</item>
 		<item>
 			<title>Kratos 使用nacos服务发现的一个坑</title>
-			<link>https://fulltimelink.github.io/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</link>
+			<link>http://fulltime.link/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</link>
 			<pubDate>Mon, 11 Apr 2022 16:51:19 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</guid>
+			<guid>http://fulltime.link/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</guid>
 			<description>
 			接上回，经过几天的搬砖，转码服务要上预发布了，因为服务器部署的注册中心是nacos
 所以把kratos的registry改为nacos
@@ -36,9 +36,9 @@ nacos心跳探针一直报错。。提示无可用的注册服务
 		</item>
 		<item>
 			<title>各语言的一些对比</title>
-			<link>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</link>
+			<link>http://fulltime.link/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</link>
 			<pubDate>Fri, 01 Apr 2022 16:11:47 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</guid>
+			<guid>http://fulltime.link/post/%E5%90%84%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AF%B9%E6%AF%94/</guid>
 			<description>
 			最近对接的事比较多，java 摸鱼 学习 一直没有进度
 担心前一段学习白费，把收集到的各语言的一些对比整理了一下
@@ -48,9 +48,9 @@ nacos心跳探针一直报错。。提示无可用的注册服务
 		</item>
 		<item>
 			<title>Kratos Rpc尝试的二三事</title>
-			<link>https://fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
+			<link>http://fulltime.link/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
 			<pubDate>Thu, 31 Mar 2022 08:14:27 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
+			<guid>http://fulltime.link/post/kratos-rpc%E5%B0%9D%E8%AF%95%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
 			<description>
 			 起 经过这一段时间对kratos框架的了解，也算大致熟悉了整体的使用流程，以及DDD的一些思想。 恰巧我台有个c端转码的业务，为了不让机房里的那些T4闲置落灰，遂决定用kratos把玩一番。
 析 既然是使用GPU转码，就先确认GPU转码的可行性。由于我台目前整体已经推成了容器化 …

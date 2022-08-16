@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>k8s on 旧事重提</title>
-		<link>https://fulltimelink.github.io/tags/k8s/</link>
-		<description>Recent content in k8s on fulltimelink.github.io</description>
+		<link>http://fulltime.link/tags/k8s/</link>
+		<description>Recent content in k8s on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
 		<lastBuildDate>Tue, 29 Mar 2022 12:55:56 +0800</lastBuildDate>
-		<atom:link href="https://fulltimelink.github.io/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="http://fulltime.link/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
 		<item>
 			<title>kubectl cp 的限制</title>
-			<link>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</link>
+			<link>http://fulltime.link/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</link>
 			<pubDate>Tue, 29 Mar 2022 12:55:56 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</guid>
+			<guid>http://fulltime.link/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</guid>
 			<description>
 			kubectl cp 本地文件复制到pod内 kubectl cp D:/1/example.txt podname:/var/www/html/public/a.txt kubectl cp example.txt podname:public/a.txt 本地及远程地址都可使 …
 			</description>

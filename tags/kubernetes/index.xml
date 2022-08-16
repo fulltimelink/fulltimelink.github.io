@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>kubernetes on 旧事重提</title>
-		<link>https://fulltimelink.github.io/tags/kubernetes/</link>
-		<description>Recent content in kubernetes on fulltimelink.github.io</description>
+		<link>http://fulltime.link/tags/kubernetes/</link>
+		<description>Recent content in kubernetes on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
 		<lastBuildDate>Fri, 29 Apr 2022 14:32:51 +0800</lastBuildDate>
-		<atom:link href="https://fulltimelink.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="http://fulltime.link/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
 		<item>
 			<title>rancher下kratos服务”内存泄漏”的一次排查</title>
-			<link>https://fulltimelink.github.io/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</link>
+			<link>http://fulltime.link/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</link>
 			<pubDate>Fri, 29 Apr 2022 14:32:51 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</guid>
+			<guid>http://fulltime.link/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</guid>
 			<description>
 			书接上文，服务上线后，经过一段时间的运行后发现rancher监控上内存有点异常
 疑似”内存泄漏“ 明天就五-了，这不是找事么_-_ [虽然因为疫情不能出去逛]
@@ -23,9 +23,9 @@
 		</item>
 		<item>
 			<title>kubectl cp 的限制</title>
-			<link>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</link>
+			<link>http://fulltime.link/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</link>
 			<pubDate>Tue, 29 Mar 2022 12:55:56 +0800</pubDate>
-			<guid>https://fulltimelink.github.io/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</guid>
+			<guid>http://fulltime.link/post/kubectl-cp-%E7%9A%84%E9%99%90%E5%88%B6/</guid>
 			<description>
 			kubectl cp 本地文件复制到pod内 kubectl cp D:/1/example.txt podname:/var/www/html/public/a.txt kubectl cp example.txt podname:public/a.txt 本地及远程地址都可使 …
 			</description>
