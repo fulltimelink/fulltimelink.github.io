@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>algorithm on 旧事重提</title>
+		<title>Algorithm on 旧事重提</title>
 		<link>http://fulltime.link/tags/algorithm/</link>
-		<description>Recent content in algorithm on fulltime.link</description>
+		<description>Recent content in Algorithm on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
-		<lastBuildDate>Wed, 13 Apr 2022 08:54:18 +0800</lastBuildDate>
+		<lastBuildDate>Tue, 16 Aug 2022 11:32:51 +0800</lastBuildDate>
 		<atom:link href="http://fulltime.link/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+		<item>
+			<title>二叉树的递归及循环遍历</title>
+			<link>http://fulltime.link/post/data-structure-binary-tree-loop/</link>
+			<pubDate>Tue, 16 Aug 2022 11:32:51 +0800</pubDate>
+			<guid>http://fulltime.link/post/data-structure-binary-tree-loop/</guid>
+			<description>
+			对二叉树使用递归及循环两种方式进行遍历（前序、中序、后序）
+			</description>
+		</item>
 		<item>
 			<title>梳理一下排序算法</title>
 			<link>http://fulltime.link/post/%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>

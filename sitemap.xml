@@ -2,22 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://fulltime.link/tags/algorithm/</loc>
+    <lastmod>2022-08-16T11:32:51+08:00</lastmod>
+  </url><url>
     <loc>http://fulltime.link/tags/go/</loc>
-    <lastmod>2022-04-29T14:32:51+08:00</lastmod>
+    <lastmod>2022-08-16T11:32:51+08:00</lastmod>
+  </url><url>
+    <loc>http://fulltime.link/post/</loc>
+    <lastmod>2022-08-16T11:32:51+08:00</lastmod>
+  </url><url>
+    <loc>http://fulltime.link/tags/</loc>
+    <lastmod>2022-08-16T11:32:51+08:00</lastmod>
+  </url><url>
+    <loc>http://fulltime.link/post/data-structure-binary-tree-loop/</loc>
+    <lastmod>2022-08-16T11:32:51+08:00</lastmod>
+  </url><url>
+    <loc>http://fulltime.link/</loc>
+    <lastmod>2022-08-16T11:32:51+08:00</lastmod>
   </url><url>
     <loc>http://fulltime.link/tags/kubernetes/</loc>
     <lastmod>2022-04-29T14:32:51+08:00</lastmod>
   </url><url>
-    <loc>http://fulltime.link/post/</loc>
-    <lastmod>2022-04-29T14:32:51+08:00</lastmod>
-  </url><url>
     <loc>http://fulltime.link/post/rancher%E4%B8%8Bkratos%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E4%B8%80%E6%AC%A1%E6%8E%92%E6%9F%A5/</loc>
-    <lastmod>2022-04-29T14:32:51+08:00</lastmod>
-  </url><url>
-    <loc>http://fulltime.link/tags/</loc>
-    <lastmod>2022-04-29T14:32:51+08:00</lastmod>
-  </url><url>
-    <loc>http://fulltime.link/</loc>
     <lastmod>2022-04-29T14:32:51+08:00</lastmod>
   </url><url>
     <loc>http://fulltime.link/tags/h5/</loc>
@@ -25,9 +31,6 @@
   </url><url>
     <loc>http://fulltime.link/post/%E5%BE%AE%E4%BF%A1h5%E4%BD%BF%E7%94%A8video/</loc>
     <lastmod>2022-04-19T10:00:28+08:00</lastmod>
-  </url><url>
-    <loc>http://fulltime.link/tags/algorithm/</loc>
-    <lastmod>2022-04-13T08:54:18+08:00</lastmod>
   </url><url>
     <loc>http://fulltime.link/tags/java/</loc>
     <lastmod>2022-04-13T08:54:18+08:00</lastmod>
