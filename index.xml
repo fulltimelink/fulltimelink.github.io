@@ -6,8 +6,17 @@
 		<description>Recent content on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
-		<lastBuildDate>Wed, 17 Aug 2022 15:12:18 +0800</lastBuildDate>
+		<lastBuildDate>Thu, 18 Aug 2022 17:31:01 +0800</lastBuildDate>
 		<atom:link href="http://fulltime.link/index.xml" rel="self" type="application/rss+xml" />
+		<item>
+			<title>用GO写一个支持泛型的基础堆栈的小package</title>
+			<link>http://fulltime.link/post/write-a-go-generics-stack/</link>
+			<pubDate>Thu, 18 Aug 2022 17:31:01 +0800</pubDate>
+			<guid>http://fulltime.link/post/write-a-go-generics-stack/</guid>
+			<description>
+			官方木有找到现成的-_-，为了熟悉泛型，顺手写一个
+			</description>
+		</item>
 		<item>
 			<title>用Go进行排序</title>
 			<link>http://fulltime.link/post/go-sort/</link>
