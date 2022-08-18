@@ -6,8 +6,17 @@
 		<description>Recent content in Posts on fulltime.link</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
-		<lastBuildDate>Tue, 16 Aug 2022 11:32:51 +0800</lastBuildDate>
+		<lastBuildDate>Wed, 17 Aug 2022 15:12:18 +0800</lastBuildDate>
 		<atom:link href="http://fulltime.link/post/index.xml" rel="self" type="application/rss+xml" />
+		<item>
+			<title>用Go进行排序</title>
+			<link>http://fulltime.link/post/go-sort/</link>
+			<pubDate>Wed, 17 Aug 2022 15:12:18 +0800</pubDate>
+			<guid>http://fulltime.link/post/go-sort/</guid>
+			<description>
+			Go的固定类型排序、自定义比较排序、任意类型排序
+			</description>
+		</item>
 		<item>
 			<title>二叉树的递归及循环遍历</title>
 			<link>http://fulltime.link/post/data-structure-binary-tree-loop/</link>
