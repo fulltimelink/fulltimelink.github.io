@@ -30,7 +30,7 @@
 <meta itemprop="name" content="用GO写一个支持泛型的基础堆栈的小package">
 <meta itemprop="description" content="官方木有找到现成的-_-，为了熟悉泛型，顺手写一个"><meta itemprop="datePublished" content="2022-08-18T17:31:01+08:00" />
 <meta itemprop="dateModified" content="2022-08-18T17:31:01+08:00" />
-<meta itemprop="wordCount" content="269">
+<meta itemprop="wordCount" content="392">
 <meta itemprop="keywords" content="Go," />
 </head>
 <body>
@@ -220,7 +220,52 @@ fulltimelink
 </span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">ch</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>嗯，能跑通~</p>
-<ul>
+<p><strong>20220819更新</strong>
+后来想了想，内部类型其实没有必要再封装一下，直接将定义的类型放到外部封装类型里面即可， 然后外部类型<code>reciever</code>使用指针</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">stack</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;errors&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Stack --  @# 外部封装类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Stack</span>[<span style="color:#a6e22e">T</span> <span style="color:#a6e22e">any</span>] <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">stackSlice</span> []<span style="color:#a6e22e">T</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// ErrorStackOverflow --  @# 哨兵异常定义
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ErrorStackOverflow</span> = <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;overflow&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Pop --  @# 出栈
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stack</span>[<span style="color:#a6e22e">T</span>]) <span style="color:#a6e22e">Pop</span>() (<span style="color:#a6e22e">ret</span> <span style="color:#a6e22e">T</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stackSlice</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#ae81ff">0</span> &lt; <span style="color:#a6e22e">l</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ret</span> = (<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stackSlice</span>)[<span style="color:#a6e22e">l</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stackSlice</span> = (<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stackSlice</span>)[:<span style="color:#a6e22e">l</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">ErrorStackOverflow</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Push --  @# 入栈
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stack</span>[<span style="color:#a6e22e">T</span>]) <span style="color:#a6e22e">Push</span>(<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">T</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stackSlice</span> = append(<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stackSlice</span>, <span style="color:#a6e22e">e</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Len --  @# 栈长
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stack</span>[<span style="color:#a6e22e">T</span>]) <span style="color:#a6e22e">Len</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> len(<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stackSlice</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// IsEmpty --  @# 栈是否为空
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stack</span>[<span style="color:#a6e22e">T</span>]) <span style="color:#a6e22e">IsEmpty</span>() <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Len</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// NewStack --  @# 初始化一个栈
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewStack</span>[<span style="color:#a6e22e">T</span> <span style="color:#a6e22e">any</span>]() <span style="color:#a6e22e">Stack</span>[<span style="color:#a6e22e">T</span>] {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Stack</span>[<span style="color:#a6e22e">T</span>]{[]<span style="color:#a6e22e">T</span>{}}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li>参考链接
 <ul>
 <li>各种泛型文章讲解~</li>
