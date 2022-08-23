@@ -87,7 +87,7 @@ fulltimelink
 </div>
 <div class="markdown">
 <h2 id="0x01-替换">0x01 替换</h2>
-<p>今天有一个需求是需要将文件中的<code>\x22</code>替换为<code>&quot;</code> , 于是就想起了<code>sed -i</code>这个操作，可是中间不管如果操作，如何转义就是不生效&hellip;
+<p>今天有一个需求是需要将文件中的<code>\x22</code>替换为<code>&quot;</code> , 于是就想起了<code>sed -i</code>这个操作，可是中间不管如何操作，如何转义就是不生效&hellip;
 最后经过与运维的同学求教，发现了问题&hellip;</p>
 <ul>
 <li>一定要注意文件的编码</li>
@@ -107,7 +107,7 @@ fulltimelink
 </ul>
 <p>然后尝试使用单引号：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#39;s/\\x22/&#34;/g&#39;</span> txtfile
-</span></span></code></pre></div><p>就可以正常替换了，运维告诉为双引号需要成对出现，但是我已经将里面的进行了转义&hellip;</p>
+</span></span></code></pre></div><p>就可以正常替换了，运维告诉说双引号需要成对出现，但是我已经将里面的进行了转义&hellip;</p>
 <p>网上搜索了双引号包括好像是用于带变量的，等用到的时候再学习吧~</p>
 <p><strong>注意：<code>sed</code>并不支持反引号`,使用反引号会报错&hellip;</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sed -i <span style="color:#e6db74">`</span>s/<span style="color:#ae81ff">\\</span>x22/<span style="color:#e6db74">&#34;/g` 1C6C6112-F75F-44d9-8C17-048D72ABE264.txt
