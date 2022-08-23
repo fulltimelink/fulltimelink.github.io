@@ -2,16 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://fulltime.link/tags/go/</loc>
-    <lastmod>2022-08-18T17:31:01+08:00</lastmod>
+    <loc>http://fulltime.link/tags/linux/</loc>
+    <lastmod>2022-08-23T15:53:13+08:00</lastmod>
   </url><url>
     <loc>http://fulltime.link/post/</loc>
-    <lastmod>2022-08-18T17:31:01+08:00</lastmod>
+    <lastmod>2022-08-23T15:53:13+08:00</lastmod>
+  </url><url>
+    <loc>http://fulltime.link/post/sed-use-tips/</loc>
+    <lastmod>2022-08-23T15:53:13+08:00</lastmod>
   </url><url>
     <loc>http://fulltime.link/tags/</loc>
-    <lastmod>2022-08-18T17:31:01+08:00</lastmod>
+    <lastmod>2022-08-23T15:53:13+08:00</lastmod>
   </url><url>
     <loc>http://fulltime.link/</loc>
+    <lastmod>2022-08-23T15:53:13+08:00</lastmod>
+  </url><url>
+    <loc>http://fulltime.link/tags/go/</loc>
     <lastmod>2022-08-18T17:31:01+08:00</lastmod>
   </url><url>
     <loc>http://fulltime.link/post/write-a-go-generics-stack/</loc>
@@ -46,9 +52,6 @@
   </url><url>
     <loc>http://fulltime.link/post/kratos-%E4%BD%BF%E7%94%A8nacos%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</loc>
     <lastmod>2022-04-11T16:51:19+08:00</lastmod>
-  </url><url>
-    <loc>http://fulltime.link/tags/linux/</loc>
-    <lastmod>2022-04-02T18:24:39+08:00</lastmod>
   </url><url>
     <loc>http://fulltime.link/post/%E5%85%B3%E4%BA%8Elibvpx%E7%BC%96%E7%A0%81/</loc>
     <lastmod>2022-04-02T18:24:39+08:00</lastmod>

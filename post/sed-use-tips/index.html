@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sed使用的一个注意事项 | 旧事重提</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.101.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="fulltimelink">
+<meta name="keywords" content="Linux">
+<meta name="description" content="Linux下使用Sed进行替换时的两个注意事项">
+<link rel="stylesheet" type="text/css" media="screen" href="/css/normalize.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/all.css" />
+
+
+
+
+<meta property="og:title" content="Sed使用的一个注意事项" />
+<meta property="og:description" content="Linux下使用Sed进行替换时的两个注意事项" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://fulltime.link/post/sed-use-tips/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-08-23T15:53:13+08:00" />
+<meta property="article:modified_time" content="2022-08-23T15:53:13+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Sed使用的一个注意事项"/>
+<meta name="twitter:description" content="Linux下使用Sed进行替换时的两个注意事项"/>
+
+<meta itemprop="name" content="Sed使用的一个注意事项">
+<meta itemprop="description" content="Linux下使用Sed进行替换时的两个注意事项"><meta itemprop="datePublished" content="2022-08-23T15:53:13+08:00" />
+<meta itemprop="dateModified" content="2022-08-23T15:53:13+08:00" />
+<meta itemprop="wordCount" content="69">
+<meta itemprop="keywords" content="Linux," />
+</head>
+<body>
+<header>
+<div id="titletext">
+<h2 id="titleonly"><a href="http://fulltime.link/">旧事重提</a></h2>
+</div>
+<div id="title-social">
+</div>
+<div id="mainmenu">
+<nav>
+<ul>
+<li><a href="/tags/algorithm">Algorithm</a></li>
+<li><a href="/tags/go">Go</a></li>
+<li><a href="/tags/h5">H5</a></li>
+<li><a href="/tags/java">Java</a></li>
+<li><a href="/tags/javascript">Javascript</a></li>
+<li><a href="/tags/kubernetes">Kubernetes</a></li>
+<li><a href="/tags/linux">Linux</a></li>
+<li><a href="/tags/php">Php</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main>
+<div class="post">
+<article>
+<div class="post-header">
+<div class="meta">
+<div class="date">
+<span class="day">23</span>
+<span class="rest">Aug 2022</span>
+</div>
+</div>
+<div class="matter">
+<h1 class="title">Sed使用的一个注意事项</h1>
+<p class="post-meta">
+<span class="post-meta">
+
+
+
+
+
+<i class="fas fa-user"></i>&nbsp;
+
+fulltimelink
+
+
+
+</span>
+
+</p>
+</div>
+</div>
+<div class="markdown">
+<h2 id="0x01-替换">0x01 替换</h2>
+<p>今天有一个需求是需要将文件中的<code>\x22</code>替换为<code>&quot;</code> , 于是就想起了<code>sed -i</code>这个操作，可是中间不管如果操作，如何转义就是不生效&hellip;
+最后经过与运维的同学求教，发现了问题&hellip;</p>
+<ul>
+<li>一定要注意文件的编码</li>
+</ul>
+<p>我这个需要替换的文件是从elk导出来的日志，因为ingress没有开启<code>escape=json</code> 所以post请求时的<code>request_body</code>会将<code>&quot;</code>等特殊字符替换为十六进制的字符，然后经过<code>logstash</code>存放到<code>es</code>后，就会丢失。</p>
+<p>首先这个导出的文件的编码是</p>
+<p><figure>
+  <img src="/20220823/1.jpg" alt="202208231"  />
+</figure></p>
+<p>并不是<code>UTF-8</code> 所以导致了<code>sed -i</code>命令无效果</p>
+<p><strong>事后确认：这个文件是运维给我的，我当时以为是运维那边的问题，后来确认了一下，是运维发送我的是文本，是钉钉自己转换成了文件文件&hellip;</strong></p>
+<p>然后将文件转换成<code>UTF-8</code>后，执行命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#34;s/\\x22/\&#34;/g&#34;</span> txtfile
+</span></span></code></pre></div><p>还是没有效果&hellip;</p>
+<ul>
+<li>如果操作中有双引号，记得用单引号包括</li>
+</ul>
+<p>然后尝试使用单引号：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#39;s/\\x22/&#34;/g&#39;</span> txtfile
+</span></span></code></pre></div><p>就可以正常替换了，运维告诉为双引号需要成对出现，但是我已经将里面的进行了转义&hellip;</p>
+<p>网上搜索了双引号包括好像是用于带变量的，等用到的时候再学习吧~</p>
+<p><strong>注意：<code>sed</code>并不支持反引号`,使用反引号会报错&hellip;</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sed -i <span style="color:#e6db74">`</span>s/<span style="color:#ae81ff">\\</span>x22/<span style="color:#e6db74">&#34;/g` 1C6C6112-F75F-44d9-8C17-048D72ABE264.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">bash: command substitution: line 1: unexpected EOF while looking for matching `&#34;</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">bash: command substitution: line 2: syntax error: unexpected end of file
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">sed: -e expression #1, char 2: unknown command: `C&#39;</span>
+</span></span></code></pre></div><ul>
+<li>相关链接
+<ul>
+<li>问了运维</li>
+</ul>
+</li>
+</ul>
+<p><figure>
+  <img src="/20220823.jpg" alt="20220823"  />
+</figure></p>
+
+</div>
+<div class="tags">
+<div class="taxosfloating_left">
+<p>Tags</p>
+</div>
+<div class="termsfloating_right">
+<p>
+<a href="/tags/linux/">linux</a>
+</p>
+</div>
+<div class="clearit"></div>
+</div>
+</article>
+</div>
+</main><script src="/js/dark-mode.js"></script>
+
+</body>
+</html>
